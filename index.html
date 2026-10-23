@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f3ebdd">
+<title>NOX STUDY</title>
+<style>
+:root{--bg:#f3ebdd;--surface:#fffaf1;--ink:#34291f;--muted:#827365;--line:#dfd0bc;--gold:#9a6b43;--red:#b96552;--green:#5f8064;--white:#fffdf8;--shadow:0 8px 28px #4b32120d}
+[data-theme="dark"]{--bg:#1e1a17;--surface:#2b241f;--ink:#f6eee4;--muted:#c2b2a1;--line:#493b30;--gold:#d5a579;--red:#df8d78;--green:#9bb99a;--white:#332a23;--shadow:0 8px 28px #0003}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.55;transition:background .2s,color .2s}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}
+.app{max-width:760px;margin:auto;padding:18px 15px 42px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 2px 18px}
+.brand{display:flex;align-items:center;gap:11px}.mark{width:43px;height:43px;border-radius:15px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-weight:850;letter-spacing:1px}.brand h1{font-size:21px;letter-spacing:1.5px;margin:0;font-weight:850}.brand p{margin:1px 0 0;font-size:12px;color:var(--muted)}
+.icon-btn{background:var(--surface);border:1px solid var(--line);color:var(--ink);width:42px;height:42px;border-radius:14px;font-size:18px}
+h2{font-size:18px;margin:0 0 4px}h3{font-size:15px;margin:0}
+.sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:17px;margin-bottom:15px;box-shadow:var(--shadow)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.small-btn{background:transparent;color:var(--gold);padding:5px 0;font-size:13px;font-weight:700}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin:12px 0 15px}.home-timetable{display:grid;gap:6px}.home-slot{display:grid;grid-template-columns:76px 1fr;gap:7px;align-items:stretch}.home-slot time{font-size:11px;color:var(--muted);padding:9px 2px;align-self:center}.home-slot button{min-height:42px;border:1px dashed var(--line);border-radius:12px;background:var(--bg);color:var(--ink);text-align:right;padding:8px 10px;font-size:12px}.home-slot button.filled{border-style:solid;background:#e9e9fb;border-color:#d6d5f3;color:#45417f;font-weight:700}
+.day{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:7px 1px;text-align:center;color:var(--muted);font-size:11px}
+.day b{display:block;font-size:13px;color:var(--ink);margin-top:2px}
+.day.today{background:var(--ink);color:var(--bg);border-color:var(--ink)}.day.today b{color:var(--bg)}
+.today-note{border-top:1px solid var(--line);padding-top:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px}
+.pill{border-radius:999px;padding:4px 9px;background:var(--bg);color:var(--muted);font-size:11px;white-space:nowrap}
+.sections{display:grid;gap:10px}
+.section-card{display:flex;align-items:center;gap:13px;min-height:77px;padding:14px 15px;background:var(--surface);border:1px solid var(--line);border-radius:18px;text-align:right;color:var(--ink);box-shadow:var(--shadow);transition:transform .15s}
+.section-card{animation:riseIn .42s cubic-bezier(.2,.7,.2,1) both}.section-card:nth-child(2){animation-delay:.04s}.section-card:nth-child(3){animation-delay:.08s}.section-card:nth-child(4){animation-delay:.12s}@keyframes riseIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}.section-card:active{transform:scale(.99)}button,input,select,textarea{transition:background .18s,border-color .18s,box-shadow .18s}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}.section-icon{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;font-size:20px;flex:none}
+.red .section-icon{background:#f4e3d8;color:#9b503a}.focus .section-icon{background:#eee1cf;color:#815a38}.green .section-icon{background:#e4eadc;color:#49694d}
+.section-copy{flex:1;min-width:0}.section-copy strong{display:block;font-size:15px}.section-copy span{display:block;font-size:12px;color:var(--muted);margin-top:2px}.chevron{font-size:19px;color:var(--muted)}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+.mini{padding:13px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}.mini strong{display:block;font-size:13px}.mini span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.hidden{display:none!important}.back{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--muted);padding:0;margin-bottom:14px}
+.action{background:var(--ink);color:var(--bg);border-radius:13px;padding:11px 15px;font-weight:700}.action.secondary{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.field{margin:13px 0}.field label{display:block;font-size:13px;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}
+.task{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.task input{margin-top:6px;accent-color:var(--gold)}.task span{flex:1}.task small{display:block;color:var(--muted);font-size:12px}
+.subject-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.subject-row:last-child{border-bottom:0}
+.timer{font-size:42px;font-weight:800;letter-spacing:1px;text-align:center;margin:16px 0;font-variant-numeric:tabular-nums}
+.notice{font-size:12px;color:var(--muted);background:var(--bg);padding:10px 12px;border-radius:12px;margin-top:12px}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:18px 0 4px}
+.pdf-reader-overlay{position:fixed!important;inset:0;z-index:9999;background:var(--bg);padding:12px!important;margin:0!important;border-radius:0!important;overflow:auto;display:flex;flex-direction:column;min-height:100dvh}.pdf-reader-overlay iframe{width:100%;height:calc(100dvh - 150px)!important;flex:1;min-height:60vh;border:1px solid var(--line);border-radius:12px;background:white}.pdf-stage{position:relative;flex:1;min-height:60vh}.pdf-stage iframe{display:block}.pdf-ink{position:absolute;inset:0;width:100%;height:100%;touch-action:none;pointer-events:none}.pdf-ink.active{pointer-events:auto}.pdf-tools{display:flex;gap:6px;flex-wrap:wrap;padding:8px 0}.pdf-tools button{background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:8px 11px;color:var(--ink);font-weight:650}.pdf-tools button.active{outline:2px solid var(--gold);background:var(--white)}.pdf-reader-overlay .panel-head{position:sticky;top:0;background:var(--surface);z-index:2;padding:8px;border-radius:12px}
+@media(min-width:560px){.app{padding:26px 24px 50px}.sections{grid-template-columns:1fr 1fr}.section-card{min-height:88px}.panel{padding:20px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand"><div class="mark">N</div><div><h1>NOX STUDY</h1><p>مساحتك الهادئة للدراسة</p></div></div>
+  <button class="icon-btn" id="settingsBtn" aria-label="الإعدادات" title="الإعدادات">⚙</button>
+</header>
+
+<main id="home">
+  <section class="panel">
+    <div class="panel-head"><div><h2>جدولي الأسبوعي</h2><p class="sub" style="margin:3px 0 0">نظرة سريعة على أسبوعك</p></div><button class="small-btn" data-open="timetable">عرض الجدول ←</button></div>
+    <div class="week" id="week"></div><div id="homeTimetable" class="home-timetable"></div>
+    <div class="today-note"><span id="todayLabel">خطة اليوم</span><span class="pill" id="classCount">لا توجد حصص مضافة</span></div>
+  </section>
+
+  <div class="panel-head" style="padding:0 3px"><div><h2>أقسامك</h2><p class="sub" style="margin:3px 0 0">كل شيء في مكان واضح</p></div></div>
+  <div class="sections">
+    <button class="section-card red" data-open="summaries"><span class="section-icon">▤</span><span class="section-copy"><strong>الملخصات</strong><span>ملخصاتك، ملفاتك، والبطاقات التعليمية</span></span><span class="chevron">‹</span></button>
+    <button class="section-card focus" data-open="tasks"><span class="section-icon">✓</span><span class="section-copy"><strong>المهام</strong><span>واجباتك ومواعيد الاختبارات</span></span><span class="chevron">‹</span></button>
+    <button class="section-card focus" data-open="wellbeing"><span class="section-icon">◷</span><span class="section-copy"><strong>التركيز ووقت الشاشة</strong><span>جلساتك وأهداف استخدامك في مكان واحد</span></span><span class="chevron">‹</span></button>
+  </div>
+  <div class="mini-grid">
+    <div class="mini"><strong>مهامك القادمة</strong><span id="nextTask">أضف أول مهمة دراسية</span></div>
+    <div class="mini"><strong>تقدم هذا الأسبوع</strong><span id="progress">ابدأ أول جلسة لتتبع تقدمك</span></div>
+  </div>
+</main>
+
+<section class="hidden" id="view"></section>
+<footer>NOX STUDY · بسيط، هادئ، وعلى طريقتك</footer>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const days=[["الإثنين","إث"],["الثلاثاء","ثل"],["الأربعاء","أر"],["الخميس","خم"],["الجمعة","جم"],["السبت","سب"],["الأحد","أح"]];
+const navStack=[];const state={theme:localStorage.getItem("noxTheme")||"light",tasks:JSON.parse(localStorage.getItem("noxTasks")||"[]"),sessions:Number(localStorage.getItem("noxSessions")||0),timetable:JSON.parse(localStorage.getItem("noxTimetable")||"{}")};
+document.documentElement.dataset.theme=state.theme==="dark"?"dark":"light";
+function save(){localStorage.setItem("noxTasks",JSON.stringify(state.tasks));localStorage.setItem("noxSessions",String(state.sessions));localStorage.setItem("noxTimetable",JSON.stringify(state.timetable));}
+function renderWeek(){
+ const now=new Date(), js=now.getDay(), idx=js===0?6:js-1;
+ $("#week").innerHTML=days.map((d,i)=>`<div class="day ${i===idx?"today":""}"><span>${d[1]}</span><b>${i===idx?"اليوم":i+1}</b></div>`).join("");
+ const slots=[["08:30","09:20"],["09:30","10:20"],["10:30","11:20"],["11:30","12:20"],["14:00","14:50"],["15:00","15:50"]];
+ $("#homeTimetable").innerHTML=slots.map((t,i)=>{const item=(state.timetable[days[idx][0]]||[])[i];return `<div class="home-slot"><time>${t[0]}–${t[1]}</time><button class="${item&&item.subject?'filled':''}" data-home-slot="${i}">${item&&item.subject?escapeHtml(item.subject):'+ أضف مادة أو مهمة'}</button></div>`}).join("");
+ $("#todayLabel").textContent="خطة "+days[idx][0];
+ const count=(state.timetable[days[idx][0]]||[]).filter(x=>x.subject).length;
+ $("#classCount").textContent=count?count+" حصص مضافة":"لا توجد حصص مضافة";
+ const upcoming=state.tasks.find(t=>!t.done);$("#nextTask").textContent=upcoming?upcoming.text:"أضف أول مهمة دراسية";
+ $("#progress").textContent=state.sessions?state.sessions+" جلسة تركيز مكتملة":"ابدأ أول جلسة لتتبع تقدمك";
+}
+function openView(id,push=true){
+ const v=$("#view");const current=v.dataset.current||"home";if(push&&current!==id)navStack.push(current);
+ $("#home").classList.add("hidden");v.classList.remove("hidden");v.dataset.current=id;
+ const back='<button class="back" data-back>→ رجوع خطوة</button>';
+ const views={
+ tasks:`${back}<section class="panel"><h2>مهامي</h2><p class="sub">قسّم الدراسة إلى خطوات صغيرة وحدد ما أنجزته.</p><div class="field"><label>المهمة</label><input id="taskText" placeholder="مثال: حل تمارين الرياضيات"></div><div class="field"><label>الموعد (اختياري)</label><input id="taskDue" type="date"></div><button class="action" id="addTask">＋ إضافة مهمة</button><div id="taskList" style="margin-top:12px"></div></section>`,
+ summaries:`${back}<section class="panel"><h2>الملخصات</h2><p class="sub">اجمع دروسك وأدوات المراجعة في مكان واحد.</p><div class="task" role="button" tabindex="0" data-open="folders"><span>📁<b> مجلداتي</b><small>نظّم المواد والدروس والملفات.</small></span></div><div class="task" role="button" tabindex="0" data-open="cards"><span>🃏<b> البطاقات التعليمية</b><small>راجع ما تعرفه وما يحتاج إلى تدريب.</small></span></div><div class="task" role="button" tabindex="0" data-open="tutor"><span>🧠<b> مساعد الدراسة</b><small>نموذج أولي لواجهة المساعد؛ لم يُربط بعد بمحرك ذكاء اصطناعي.</small></span></div><div class="notice">رفع ملفات PDF والصور وتوليد الملخصات والاختبارات سيُبنى في مرحلة الملفات، بعد تجهيز الأساس.</div></section>`,
+ folders:`${back}<section class="panel"><h2>مجلداتي</h2><p class="sub">احفظ ملفاتك محليًا. فتح المعاينة داخل التطبيق متاح لملفات PDF.</p><div id="folderStart"><button class="action" id="createFile">＋ إنشاء ملف</button><div id="folderList" style="margin-top:12px"></div></div><div id="fileForm" class="hidden"><div class="field"><label>اسم الملف</label><input id="folderName" placeholder="مثال: ملخص الرياضيات"></div><div class="field"><label>اختيار ملف من الهاتف</label><input id="pickedFile" type="file" accept=".pdf,application/pdf,image/*,.txt,.doc,.docx"></div><div class="actions"><button class="action" id="addFolder">حفظ الملف</button><button class="action secondary" id="cancelFile">إلغاء</button></div></div><div id="pdfReader" class="hidden pdf-reader-overlay"><div class="panel-head"><h3 id="pdfTitle">معاينة الملف</h3><button class="action secondary" id="closePdf">إغلاق ✕</button></div><div class="pdf-tools"><button class="small-btn" data-ink-mode="pen">✎ قلم</button><button class="small-btn" data-ink-mode="highlighter">🖍 تظليل</button><button class="small-btn" data-ink-mode="eraser">⌫ ممحاة</button><button class="small-btn" id="clearInk">مسح الكتابة</button><label class="sub">السُمك <input id="inkWidth" type="range" min="2" max="14" value="4" style="width:90px;vertical-align:middle"></label></div><div class="pdf-stage"><iframe id="pdfFrame" title="معاينة PDF"></iframe><canvas id="pdfInk" class="pdf-ink" aria-label="طبقة الكتابة على ملف الدرس"></canvas></div><p class="notice">يمكنك الكتابة فوق المعاينة؛ تُحفظ العلامات على هذا الجهاز. طبقة الكتابة مستقلة عن صفحات PDF.</p></div></section>`,
+ cards:`${back}<section class="panel"><h2>البطاقات التعليمية</h2><p class="sub">أضف سؤالًا وإجابته، ثم اختبر ذاكرتك قبل كشف الإجابة.</p><div class="field"><label>بحث في البطاقات</label><input id="cardSearch" placeholder="ابحث بكلمة من السؤال"></div><div class="field"><label>السؤال</label><input id="cardQ" placeholder="اكتب سؤالًا قصيرًا"></div><div class="field"><label>الإجابة</label><textarea id="cardA" rows="3" placeholder="اكتب الإجابة"></textarea></div><button class="action" id="addCard">حفظ البطاقة</button><div id="cardList"></div></section>`,
+ tutor:`${back}<section class="panel"><h2>مساعد الدراسة</h2><p class="sub">واجهة أولية؛ لم يُربط بعد بخدمة ذكاء اصطناعي.</p><div class="field"><label>ما الذي تريد فهمه؟</label><textarea rows="4" placeholder="اكتب سؤالك أو الصق جزءًا من الدرس"></textarea></div><button class="action" id="tutorDemo">عرض طريقة الاستخدام</button><p class="notice hidden" id="tutorNote">في المرحلة التالية سنربط المساعد بمصادرك، مع توضيح المعلومات الإضافية وعدم الادعاء بوجود اتصال غير متاح.</p></section>`,
+ wellbeing:`${back}<section class="panel"><h2>التركيز ووقت الشاشة</h2><p class="sub">إدارة جلسات الدراسة وأهداف الاستخدام من مكان واحد.</p><div class="panel-head"><h3>جلسة التركيز</h3><span class="pill">مؤقت دراسة</span></div><div class="field"><label>المادة (اختياري)</label><input id="focusSubject" placeholder="مثل: الرياضيات"></div><div class="field"><label>مدة الجلسة بالدقائق</label><select id="duration"><option value="25">25 دقيقة</option><option value="15">15 دقيقة</option><option value="30">30 دقيقة</option><option value="45">45 دقيقة</option><option value="60">60 دقيقة</option></select></div><div class="timer" id="timer">25:00</div><div class="actions" style="justify-content:center"><button class="action" id="startTimer">ابدأ</button><button class="action secondary" id="resetTimer">إعادة ضبط</button></div><p class="notice">المؤقت يعمل داخل التطبيق؛ حظر التطبيقات فعليًا يحتاج تكامل Android وصلاحيات خاصة.</p><div style="height:1px;background:var(--line);margin:20px 0"></div><div class="panel-head"><h3>أهداف وقت الشاشة</h3><span class="pill">أهداف يدوية</span></div><div class="field"><label>اختر التطبيق</label><select id="appName"><option value="">اختر تطبيقًا</option><option>YouTube</option><option>TikTok</option><option>Instagram</option><option>Facebook</option><option>WhatsApp</option><option>الألعاب</option><option>تطبيق آخر</option></select></div><div class="field"><label>الحد اليومي: <b id="limitLabel">60 دقيقة</b></label><input id="appLimit" type="range" min="5" max="240" step="5" value="60"><div style="display:flex;justify-content:space-between;color:var(--muted);font-size:11px"><span>5 دقائق</span><span>4 ساعات</span></div><input id="appLimitNumber" type="number" min="5" max="240" value="60" style="margin-top:8px"></div><button class="action" id="addLimit">حفظ الهدف على هذا الجهاز</button><div id="limitsList"></div><p class="notice">هذه أهداف يدوية وليست قراءة فعلية لاستخدام التطبيقات الأخرى؛ ذلك يحتاج تكامل Android.</p></section>`,
+
+ timetable:`${back}<section class="panel"><h2>الجدول الدراسي</h2><p class="sub">من الإثنين إلى السبت. اضغط أي خانة لإضافة مادة أو تعديلها.</p><div style="overflow-x:auto"><table id="ttGrid" style="border-collapse:collapse;min-width:720px;width:100%;font-size:12px"></table></div><p class="notice">الفترات: 08–09، 09–10، 10–11، 11–12، 14–15، 15–16، 16–17، 17–18.</p></section>`,
+ settings:`${back}<section class="panel"><h2>الإعدادات</h2><p class="sub">إعدادات أساسية فقط، دون قوائم معقدة.</p><div class="field"><label>المظهر</label><select id="themeSelect"><option value="light">فاتح — كريمي</option><option value="dark">داكن</option></select></div><div class="field"><label>لغة الواجهة</label><select id="langSelect"><option value="ar">العربية</option><option value="fr">Français (قريبًا)</option><option value="en">English (قريبًا)</option></select></div><button class="action" id="saveSettings">حفظ الإعدادات</button><div class="notice">الحساب والمزامنة والنسخ الاحتياطي لم تُفعّل بعد؛ لن نعرضها كأنها تعمل قبل بناء الخادم.</div></section>`
+ };
+ v.innerHTML=views[id]||`${back}<section class="panel"><h2>${id}</h2><p class="sub">قيد الإعداد.</p></section>`;
+ if(id==="tasks"){renderTasks();$("#addTask").onclick=()=>{const text=$("#taskText").value.trim(),due=$("#taskDue").value;if(!text)return;state.tasks.push({id:Date.now(),text,due,done:false});save();renderTasks();renderWeek();$("#taskText").value="";$("#taskDue").value=""};}
+ if(id==="settings"){ $("#themeSelect").value=state.theme; $("#saveSettings").onclick=()=>{state.theme=$("#themeSelect").value;localStorage.setItem("noxTheme",state.theme);document.documentElement.dataset.theme=state.theme==="dark"?"dark":"light";openView("settings")};}
+ if(id==="folders"){renderFolders();$("#createFile").onclick=()=>{$("#fileForm").classList.remove("hidden");$("#folderStart").classList.add("hidden")};$("#cancelFile").onclick=()=>{$("#fileForm").classList.add("hidden");$("#folderStart").classList.remove("hidden")};$("#addFolder").onclick=async()=>{let n=$("#folderName").value.trim(),f=$("#pickedFile").files[0];if(!n||!f){alert("اكتب اسم الملف واختر الملف من الهاتف.");return}try{const id="f"+Date.now();await putStoredFile({id,name:n,fileName:f.name,size:f.size,type:f.type,blob:f});let a=JSON.parse(localStorage.getItem("noxFolders")||"[]");a.push({id,name:n,fileName:f.name,size:f.size});localStorage.setItem("noxFolders",JSON.stringify(a));$("#folderName").value="";$("#pickedFile").value="";renderFolders();$("#fileForm").classList.add("hidden");$("#folderStart").classList.remove("hidden")}catch(e){alert("تعذر حفظ الملف في المتصفح. جرّب ملفًا أصغر أو افتح الموقع في Chrome.")}};$("#closePdf").onclick=()=>{if(window.noxPdfUrl)URL.revokeObjectURL(window.noxPdfUrl);window.noxPdfUrl=null;$("#pdfFrame").src="about:blank";$("#pdfReader").classList.add("hidden");$("#pdfInk").classList.remove("active");window.noxCurrentFileId=null};}
+ if(id==="cards"){renderCards();$("#addCard").onclick=()=>{let q=$("#cardQ").value.trim(),a=$("#cardA").value.trim();if(!q||!a)return;let cs=JSON.parse(localStorage.getItem("noxCards")||"[]");cs.push({q,a});localStorage.setItem("noxCards",JSON.stringify(cs));$("#cardQ").value="";$("#cardA").value="";renderCards()};}
+ if(id==="tutor")$("#tutorDemo").onclick=()=>$("#tutorNote").classList.remove("hidden");
+ if(id==="wellbeing"){let seconds=Number($("#duration").value)*60,interval=null;const paint=()=>$("#timer").textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0");$("#duration").onchange=()=>{if(interval)clearInterval(interval);interval=null;seconds=Number($("#duration").value)*60;paint();$("#startTimer").textContent="ابدأ"};$("#startTimer").onclick=()=>{if(interval){clearInterval(interval);interval=null;$("#startTimer").textContent="استئناف";return}$("#startTimer").textContent="إيقاف مؤقت";interval=setInterval(()=>{seconds--;paint();if(seconds<=0){clearInterval(interval);interval=null;state.sessions++;save();renderWeek();$("#startTimer").textContent="اكتملت الجلسة"}},1000)};$("#resetTimer").onclick=()=>{if(interval)clearInterval(interval);interval=null;seconds=Number($("#duration").value)*60;paint();$("#startTimer").textContent="ابدأ"};paint();renderLimits();$("#appLimit").oninput=()=>{$("#limitLabel").textContent=$("#appLimit").value+" دقيقة";$("#appLimitNumber").value=$("#appLimit").value};$("#appLimitNumber").oninput=()=>{let m=Math.max(5,Math.min(240,Number($("#appLimitNumber").value)||5));$("#appLimit").value=m;$("#limitLabel").textContent=m+" دقيقة"};$("#addLimit").onclick=()=>{let n=$("#appName").value.trim(),m=Number($("#appLimitNumber").value);if(!n||m<1)return;let a=JSON.parse(localStorage.getItem("noxLimits")||"[]");a.push({n,m});localStorage.setItem("noxLimits",JSON.stringify(a));renderLimits();$("#appName").value="";$("#appLimit").value="60";$("#appLimitNumber").value="60";$("#limitLabel").textContent="60 دقيقة"};}
+ if(id==="timetable"){renderTT();}
+}
+function renderTasks(){const el=$("#taskList");if(!el)return;el.innerHTML=state.tasks.length?state.tasks.map((t,i)=>`<div class="task"><input type="checkbox" data-task-done="${i}" ${t.done?"checked":""} aria-label="تم الإنجاز"><span style="${t.done?"text-decoration:line-through;opacity:.6":""}">${escapeHtml(t.text)}<small>${t.due?"الموعد: "+escapeHtml(t.due):"دون موعد محدد"}</small></span><button class="small-btn" data-task-delete="${i}">حذف</button></div>`).join(""):"<p class=\"sub\">لا توجد مهام بعد. أضف أول مهمة فوق.</p>";el.querySelectorAll("[data-task-done]").forEach(x=>x.onchange=()=>{state.tasks[+x.dataset.taskDone].done=x.checked;save();renderTasks();renderWeek()});el.querySelectorAll("[data-task-delete]").forEach(x=>x.onclick=()=>{state.tasks.splice(+x.dataset.taskDelete,1);save();renderTasks();renderWeek()})}
+let inkMode="pen",inkDrawing=false,inkLast=null;
+function initPdfInk(fileId){
+ const canvas=$("#pdfInk"),stage=canvas.parentElement,ctx=canvas.getContext("2d");
+ const resize=()=>{const r=stage.getBoundingClientRect(),d=window.devicePixelRatio||1;canvas.width=Math.max(1,Math.round(r.width*d));canvas.height=Math.max(1,Math.round(r.height*d));canvas.style.width=r.width+"px";canvas.style.height=r.height+"px";ctx.setTransform(d,0,0,d,0,0);drawInk(fileId)};
+ const key="noxPdfInk:"+fileId;
+ window.drawInk=(id)=>{const c=$("#pdfInk"),x=c.getContext("2d"),d=window.devicePixelRatio||1;x.clearRect(0,0,c.width,c.height);x.setTransform(d,0,0,d,0,0);let data=[];try{data=JSON.parse(localStorage.getItem("noxPdfInk:"+id)||"[]")}catch{};for(const s of data){if(!s.points?.length)continue;x.beginPath();x.moveTo(s.points[0].x*c.clientWidth,s.points[0].y*c.clientHeight);for(const p of s.points.slice(1))x.lineTo(p.x*c.clientWidth,p.y*c.clientHeight);x.strokeStyle=s.mode==="highlighter"?"rgba(245,205,65,.35)":s.color||"#b96552";x.lineWidth=s.width;x.lineCap="round";x.lineJoin="round";x.globalCompositeOperation=s.mode==="eraser"?"destination-out":"source-over";x.stroke()}x.globalCompositeOperation="source-over"};
+ const saveInk=()=>{try{localStorage.setItem(key,JSON.stringify(strokes))}catch{alert("مساحة التخزين ممتلئة؛ تعذر حفظ الكتابة")}};
+ let strokes=[];try{strokes=JSON.parse(localStorage.getItem(key)||"[]")}catch{}
+ const pos=e=>{const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width,y:(e.clientY-r.top)/r.height}};
+ canvas.onpointerdown=e=>{if(!canvas.classList.contains("active"))return;inkDrawing=true;canvas.setPointerCapture(e.pointerId);const p=pos(e);inkLast={x:p.x,y:p.y};strokes.push({mode:inkMode,width:Number($("#inkWidth").value),color:"#b96552",points:[p]});drawInk(fileId)};
+ canvas.onpointermove=e=>{if(!inkDrawing||!inkLast)return;const p=pos(e),s=strokes[strokes.length-1];s.points.push(p);drawInk(fileId);const x=ctx;x.beginPath();x.moveTo(inkLast.x*canvas.clientWidth,inkLast.y*canvas.clientHeight);x.lineTo(p.x*canvas.clientWidth,p.y*canvas.clientHeight);x.strokeStyle=inkMode==="highlighter"?"rgba(245,205,65,.35)":"#b96552";x.lineWidth=Number($("#inkWidth").value);x.lineCap="round";x.lineJoin="round";x.globalCompositeOperation=inkMode==="eraser"?"destination-out":"source-over";x.stroke();x.globalCompositeOperation="source-over";inkLast=p};
+ const finish=()=>{if(inkDrawing){inkDrawing=false;inkLast=null;saveInk();drawInk(fileId)}};canvas.onpointerup=finish;canvas.onpointercancel=finish;
+ document.querySelectorAll("[data-ink-mode]").forEach(b=>b.onclick=()=>{inkMode=b.dataset.inkMode;canvas.classList.toggle("active",true);document.querySelectorAll("[data-ink-mode]").forEach(q=>q.classList.toggle("active",q===b))});
+ $("#clearInk").onclick=()=>{if(confirm("مسح كل الكتابة المحفوظة لهذا الملف؟")){strokes=[];saveInk();drawInk(fileId)}};
+ if(!window.noxInkResizeBound){window.addEventListener("resize",()=>{if(window.noxCurrentFileId)resize()});window.noxInkResizeBound=true}
+ resize();
+}
+function fileDB(){return new Promise((ok,no)=>{const r=indexedDB.open("noxStudyFileStore",1);r.onupgradeneeded=()=>r.result.createObjectStore("files",{keyPath:"id"});r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}async function putStoredFile(item){const db=await fileDB();return new Promise((ok,no)=>{const tx=db.transaction("files","readwrite");tx.objectStore("files").put(item);tx.oncomplete=()=>{db.close();ok()};tx.onerror=()=>{db.close();no(tx.error)}})}async function readStoredFile(id){const db=await fileDB();return new Promise((ok,no)=>{const q=db.transaction("files","readonly").objectStore("files").get(id);q.onsuccess=()=>{db.close();ok(q.result)};q.onerror=()=>{db.close();no(q.error)}})}async function renderFolders(){let a=JSON.parse(localStorage.getItem("noxFolders")||"[]");$("#folderList").innerHTML=a.length?a.map((x,i)=>`<div class="task"><span>📄 ${escapeHtml(typeof x==="string"?x:x.name)}<small>${escapeHtml(x.fileName||"ملف")} · ${Math.round((x.size||0)/1024)} KB</small></span><div class="actions"><button class="small-btn" data-open-file="${escapeHtml(x.id||"")}">فتح</button><button class="small-btn" data-del-folder="${i}">حذف</button></div></div>`).join(""):"<p>لا توجد ملفات بعد.</p>";document.querySelectorAll("[data-open-file]").forEach(b=>b.onclick=async()=>{try{const rec=await readStoredFile(b.dataset.openFile);if(!rec){alert("هذا ملف قديم أو لم يُحفظ محتواه؛ أعد اختياره من الهاتف.");return}if(!(rec.type==="application/pdf"||rec.fileName.toLowerCase().endsWith(".pdf"))){alert("فتح الملفات داخل التطبيق متاح حاليًا لملفات PDF فقط.");return}if(window.noxPdfUrl)URL.revokeObjectURL(window.noxPdfUrl);window.noxPdfUrl=URL.createObjectURL(rec.blob);$("#pdfTitle").textContent=rec.name;window.noxCurrentFileId=rec.id;$("#pdfFrame").src=window.noxPdfUrl;$("#pdfReader").classList.remove("hidden");initPdfInk(rec.id);$("#pdfReader").scrollIntoView({behavior:"smooth",block:"start"})}catch(e){alert("تعذر فتح الملف؛ جرّب إعادة اختياره.")}});document.querySelectorAll("[data-del-folder]").forEach(b=>b.onclick=()=>{a.splice(Number(b.dataset.delFolder),1);localStorage.setItem("noxFolders",JSON.stringify(a));renderFolders()})}
+function renderCards(){let a=JSON.parse(localStorage.getItem("noxCards")||"[]");const q=($("#cardSearch")?.value||"").trim().toLowerCase();const filtered=a.map((c,i)=>({...c,_i:i})).filter(c=>(c.q+" "+c.a).toLowerCase().includes(q));$("#cardList").innerHTML=filtered.length?filtered.map(c=>`<details class="task" style="display:block"><summary>${escapeHtml(c.q)}</summary><p>${escapeHtml(c.a)}</p><div class="actions"><button class="action secondary" data-rate="${c._i}">أحتاج مراجعة</button><button class="action secondary" data-del-card="${c._i}">حذف</button></div></details>`).join(""):"<p class='sub' style='margin-top:15px'>لا توجد بطاقات مطابقة؛ أضف بطاقة أو غيّر البحث.</p>";document.querySelectorAll("[data-del-card]").forEach(b=>b.onclick=()=>{a.splice(+b.dataset.delCard,1);localStorage.setItem("noxCards",JSON.stringify(a));renderCards()});document.querySelectorAll("[data-rate]").forEach(b=>b.onclick=()=>alert("تم تذكيرك بمراجعة هذه البطاقة لاحقًا."));const search=$("#cardSearch");if(search&&!search.dataset.bound){search.dataset.bound="1";search.addEventListener("input",renderCards)}}
+function renderLimits(){let a=JSON.parse(localStorage.getItem("noxLimits")||"[]");$("#limitsList").innerHTML=a.map(x=>`<div class="subject-row"><span>${escapeHtml(x.n)}<small style="display:block;color:var(--muted)">الهدف: ${x.m} دقيقة يوميًا</small></span><span class="pill">هدف فقط</span></div>`).join("")}
+function renderTT(){
+ const lessonLabels=["الحصة 1","الحصة 2","الحصة 3","الحصة 4","الحصة 1","الحصة 2","الحصة 3","الحصة 4"];
+ const weekDays=days.slice(0,6);
+ let html='<thead><tr><th rowspan="2" style="border:1px solid var(--line);padding:9px;min-width:90px">اليوم</th><th colspan="4" style="border:1px solid var(--line);padding:9px">الصباح</th><th colspan="4" style="border:1px solid var(--line);padding:9px">بعد الزوال</th></tr><tr>';
+ lessonLabels.forEach((t,i)=>html+='<th style="border:1px solid var(--line);padding:8px;min-width:105px">'+t+'</th>');
+ html+='</tr></thead><tbody>';
+ weekDays.forEach(d=>{
+   html+='<tr><th style="border:1px solid var(--line);padding:10px;white-space:nowrap;background:var(--bg)">'+d[0]+'</th>';
+   lessonLabels.forEach((t,i)=>{
+     const entry=(state.timetable[d[0]]||[])[i],val=typeof entry==="string"?entry:(entry&&entry.subject||"");
+     html+='<td style="border:1px solid var(--line);padding:4px;min-width:105px;height:68px"><button data-tt-cell="'+d[0]+'|'+i+'" style="width:100%;height:100%;min-height:58px;background:var(--surface);color:var(--ink);border-radius:3px;padding:7px 5px;white-space:normal;font-weight:600;font-size:12px">'+escapeHtml(val||"")+'</button></td>';
+   });
+   html+='</tr>';
+ });
+ $("#ttGrid").innerHTML=html+'</tbody>';
+ document.querySelectorAll("[data-tt-cell]").forEach(btn=>btn.onclick=()=>{
+   const parts=btn.dataset.ttCell.split("|"),day=parts[0],i=Number(parts[1]),arr=state.timetable[day]||[],entry=arr[i],old=typeof entry==="string"?entry:(entry&&entry.subject||""),value=prompt("اكتب اسم المادة أو المهمة:",old);
+   if(value===null)return;
+   state.timetable[day]||=[];
+   state.timetable[day][i]={subject:value.trim(),time:lessonLabels[i]};
+   save();renderTT();renderWeek();
+ });
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+document.addEventListener("click",e=>{
+ const slot=e.target.closest("[data-home-slot]");if(slot){const idx=Number(slot.dataset.homeSlot),js=new Date().getDay(),di=js===0?6:js-1,day=days[di][0],current=(state.timetable[day]||[])[idx];const value=prompt("اكتب اسم المادة أو المهمة:",current?.subject||"");if(value!==null){state.timetable[day] ||= [];state.timetable[day][idx]={subject:value.trim(),time:["08:30–09:20","09:30–10:20","10:30–11:20","11:30–12:20","14:00–14:50","15:00–15:50"][idx]};save();renderWeek()}return}
+ let b=e.target.closest("[data-open]");if(b)openView(b.dataset.open);
+ if(e.target.closest("[data-back]")){const prev=navStack.pop()||"home";if(prev==="home"){$("#view").classList.add("hidden");$("#home").classList.remove("hidden");$("#view").dataset.current="";renderWeek()}else{openView(prev,false)}}
+});
+$("#settingsBtn").onclick=()=>openView("settings");
+renderWeek();
+</script>
+</body>
+</html>
