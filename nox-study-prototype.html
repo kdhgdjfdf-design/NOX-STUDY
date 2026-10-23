@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f3ebdd">
+<title>NOX STUDY</title>
+<style>
+:root{--bg:#eef0f7;--surface:#ffffff;--ink:#222535;--muted:#73788a;--line:#dfe2ed;--gold:#8b78c7;--red:#d46d78;--green:#559b80;--white:#f8f9fd;--shadow:0 8px 28px #252b4510}
+[data-theme="dark"]{--bg:#171923;--surface:#232637;--ink:#f3f4fa;--muted:#b2b7ca;--line:#383d53;--gold:#b6a5f1;--red:#e68b97;--green:#82c8ab;--white:#292d40;--shadow:0 8px 28px #0003}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.55;transition:background .2s,color .2s}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}
+.app{max-width:760px;margin:auto;padding:18px 15px 42px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 2px 18px}
+.brand{display:flex;align-items:center;gap:11px}.mark{width:43px;height:43px;border-radius:15px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-weight:850;letter-spacing:1px}.brand h1{font-size:21px;letter-spacing:1.5px;margin:0;font-weight:850}.brand p{margin:1px 0 0;font-size:12px;color:var(--muted)}
+.icon-btn{background:var(--surface);border:1px solid var(--line);color:var(--ink);width:42px;height:42px;border-radius:14px;font-size:18px}
+h2{font-size:18px;margin:0 0 4px}h3{font-size:15px;margin:0}
+.sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:17px;margin-bottom:15px;box-shadow:var(--shadow)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.small-btn{background:transparent;color:var(--gold);padding:5px 0;font-size:13px;font-weight:700}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin:12px 0 15px}.home-timetable{display:grid;gap:6px}.home-slot{display:grid;grid-template-columns:76px 1fr;gap:7px;align-items:stretch}.home-slot time{font-size:11px;color:var(--muted);padding:9px 2px;align-self:center}.home-slot button{min-height:42px;border:1px dashed var(--line);border-radius:12px;background:var(--bg);color:var(--ink);text-align:right;padding:8px 10px;font-size:12px}.home-slot button.filled{border-style:solid;background:#e9e9fb;border-color:#d6d5f3;color:#45417f;font-weight:700}
+.day{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:7px 1px;text-align:center;color:var(--muted);font-size:11px}
+.day b{display:block;font-size:13px;color:var(--ink);margin-top:2px}
+.day.today{background:var(--ink);color:var(--bg);border-color:var(--ink)}.day.today b{color:var(--bg)}
+.today-note{border-top:1px solid var(--line);padding-top:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px}
+.pill{border-radius:999px;padding:4px 9px;background:var(--bg);color:var(--muted);font-size:11px;white-space:nowrap}
+.sections{display:grid;gap:10px}
+.section-card{display:flex;align-items:center;gap:13px;min-height:77px;padding:14px 15px;background:var(--surface);border:1px solid var(--line);border-radius:18px;text-align:right;color:var(--ink);box-shadow:var(--shadow);transition:transform .15s}
+.section-card:active{transform:scale(.99)}.section-icon{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;font-size:20px;flex:none}
+.red .section-icon{background:#fbe8ec;color:#b94e60}.focus .section-icon{background:#e9e9fb;color:#6663b7}.green .section-icon{background:#e4f5ed;color:#328365}.prayer .section-icon{background:#f3eafa;color:#8c63ae}
+.section-copy{flex:1;min-width:0}.section-copy strong{display:block;font-size:15px}.section-copy span{display:block;font-size:12px;color:var(--muted);margin-top:2px}.chevron{font-size:19px;color:var(--muted)}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+.mini{padding:13px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}.mini strong{display:block;font-size:13px}.mini span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.hidden{display:none!important}.back{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--muted);padding:0;margin-bottom:14px}
+.action{background:var(--ink);color:var(--bg);border-radius:13px;padding:11px 15px;font-weight:700}.action.secondary{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.field{margin:13px 0}.field label{display:block;font-size:13px;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}
+.task{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.task input{margin-top:6px;accent-color:var(--gold)}.task span{flex:1}.task small{display:block;color:var(--muted);font-size:12px}
+.subject-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.subject-row:last-child{border-bottom:0}
+.timer{font-size:42px;font-weight:800;letter-spacing:1px;text-align:center;margin:16px 0;font-variant-numeric:tabular-nums}
+.notice{font-size:12px;color:var(--muted);background:var(--bg);padding:10px 12px;border-radius:12px;margin-top:12px}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:18px 0 4px}
+@media(min-width:560px){.app{padding:26px 24px 50px}.sections{grid-template-columns:1fr 1fr}.section-card{min-height:88px}.panel{padding:20px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand"><div class="mark">N</div><div><h1>NOX STUDY</h1><p>مساحتك الهادئة للدراسة</p></div></div>
+  <button class="icon-btn" id="settingsBtn" aria-label="الإعدادات" title="الإعدادات">⚙</button>
+</header>
+
+<main id="home">
+  <section class="panel">
+    <div class="panel-head"><div><h2>جدولي الأسبوعي</h2><p class="sub" style="margin:3px 0 0">نظرة سريعة على أسبوعك</p></div><button class="small-btn" data-open="timetable">عرض الجدول ←</button></div>
+    <div class="week" id="week"></div><div id="homeTimetable" class="home-timetable"></div>
+    <div class="today-note"><span id="todayLabel">خطة اليوم</span><span class="pill" id="classCount">لا توجد حصص مضافة</span></div>
+  </section>
+
+  <div class="panel-head" style="padding:0 3px"><div><h2>أقسامك</h2><p class="sub" style="margin:3px 0 0">كل شيء في مكان واضح</p></div></div>
+  <div class="sections">
+    <button class="section-card red" data-open="summaries"><span class="section-icon">▤</span><span class="section-copy"><strong>الملخصات</strong><span>ملخصاتك، ملفاتك، والبطاقات التعليمية</span></span><span class="chevron">‹</span></button>
+    <button class="section-card focus" data-open="focus"><span class="section-icon">◷</span><span class="section-copy"><strong>التركيز</strong><span>جلسة دراسة بهدوء وبدون تشتيت</span></span><span class="chevron">‹</span></button>
+    <button class="section-card green" data-open="screentime"><span class="section-icon">▥</span><span class="section-copy"><strong>وقت الشاشة</strong><span>تابع استخدامك وحدودك اليومية</span></span><span class="chevron">‹</span></button>
+    <button class="section-card prayer" data-open="prayer"><span class="section-icon">☾</span><span class="section-copy"><strong>الصلاة</strong><span>مواقيت الصلاة والأذكار والقرآن</span></span><span class="chevron">‹</span></button>
+  </div>
+  <div class="mini-grid">
+    <div class="mini"><strong>مهامك القادمة</strong><span id="nextTask">أضف أول مهمة دراسية</span></div>
+    <div class="mini"><strong>تقدم هذا الأسبوع</strong><span id="progress">ابدأ أول جلسة لتتبع تقدمك</span></div>
+  </div>
+</main>
+
+<section class="hidden" id="view"></section>
+<footer>NOX STUDY · بسيط، هادئ، وعلى طريقتك</footer>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const days=[["الإثنين","إث"],["الثلاثاء","ثل"],["الأربعاء","أر"],["الخميس","خم"],["الجمعة","جم"],["السبت","سب"],["الأحد","أح"]];
+const navStack=[];const state={theme:localStorage.getItem("noxTheme")||"light",tasks:JSON.parse(localStorage.getItem("noxTasks")||"[]"),sessions:Number(localStorage.getItem("noxSessions")||0),timetable:JSON.parse(localStorage.getItem("noxTimetable")||"{}")};
+document.documentElement.dataset.theme=state.theme==="dark"?"dark":"light";
+function save(){localStorage.setItem("noxTasks",JSON.stringify(state.tasks));localStorage.setItem("noxSessions",String(state.sessions));localStorage.setItem("noxTimetable",JSON.stringify(state.timetable));}
+function renderWeek(){
+ const now=new Date(), js=now.getDay(), idx=js===0?6:js-1;
+ $("#week").innerHTML=days.map((d,i)=>`<div class="day ${i===idx?"today":""}"><span>${d[1]}</span><b>${i===idx?"اليوم":i+1}</b></div>`).join("");
+ const slots=[["08:30","09:20"],["09:30","10:20"],["10:30","11:20"],["11:30","12:20"],["14:00","14:50"],["15:00","15:50"]];
+ $("#homeTimetable").innerHTML=slots.map((t,i)=>{const item=(state.timetable[days[idx][0]]||[])[i];return `<div class="home-slot"><time>${t[0]}–${t[1]}</time><button class="${item&&item.subject?'filled':''}" data-home-slot="${i}">${item&&item.subject?escapeHtml(item.subject):'+ أضف مادة أو مهمة'}</button></div>`}).join("");
+ $("#todayLabel").textContent="خطة "+days[idx][0];
+ const count=(state.timetable[days[idx][0]]||[]).filter(x=>x.subject).length;
+ $("#classCount").textContent=count?count+" حصص مضافة":"لا توجد حصص مضافة";
+ const upcoming=state.tasks.find(t=>!t.done);$("#nextTask").textContent=upcoming?upcoming.text:"أضف أول مهمة دراسية";
+ $("#progress").textContent=state.sessions?state.sessions+" جلسة تركيز مكتملة":"ابدأ أول جلسة لتتبع تقدمك";
+}
+function openView(id){
+ $("#home").classList.add("hidden");const v=$("#view");v.classList.remove("hidden");
+ const back='<button class="back" data-back>→ رجوع خطوة</button>';
+ const views={
+ summaries:`${back}<section class="panel"><h2>الملخصات</h2><p class="sub">اجمع دروسك وأدوات المراجعة في مكان واحد.</p><div class="task" role="button" tabindex="0" data-open="folders"><span>📁<b> مجلداتي</b><small>نظّم المواد والدروس والملفات.</small></span></div><div class="task" role="button" tabindex="0" data-open="cards"><span>🃏<b> البطاقات التعليمية</b><small>راجع ما تعرفه وما يحتاج إلى تدريب.</small></span></div><div class="task" role="button" tabindex="0" data-open="tutor"><span>🧠<b> مساعد الدراسة</b><small>نموذج أولي لواجهة المساعد؛ لم يُربط بعد بمحرك ذكاء اصطناعي.</small></span></div><div class="notice">رفع ملفات PDF والصور وتوليد الملخصات والاختبارات سيُبنى في مرحلة الملفات، بعد تجهيز الأساس.</div></section>`,
+ folders:`${back}<section class="panel"><h2>مجلداتي</h2><p class="sub">نموذج محلي بسيط لتنظيم موادك.</p><div id="folderStart"><button class="action" id="createFile">＋ إنشاء ملف</button><div id="folderList" style="margin-top:12px"></div></div><div id="fileForm" class="hidden"><div class="field"><label>اسم الملف</label><input id="folderName" placeholder="مثال: ملخص الرياضيات"></div><div class="field"><label>إضافة ملف من الهاتف</label><input id="pickedFile" type="file" accept=".pdf,image/*,.txt,.doc,.docx"></div><div class="actions"><button class="action" id="addFolder">حفظ الملف</button><button class="action secondary" id="cancelFile">إلغاء</button></div></div></section>`,
+ cards:`${back}<section class="panel"><h2>البطاقات التعليمية</h2><p class="sub">أضف سؤالًا وإجابته، ثم قيّم مدى تذكّرك.</p><div class="field"><label>السؤال</label><input id="cardQ" placeholder="اكتب سؤالًا قصيرًا"></div><div class="field"><label>الإجابة</label><textarea id="cardA" rows="3" placeholder="اكتب الإجابة"></textarea></div><button class="action" id="addCard">حفظ البطاقة</button><div id="cardList"></div></section>`,
+ tutor:`${back}<section class="panel"><h2>مساعد الدراسة</h2><p class="sub">واجهة أولية؛ لم يُربط بعد بخدمة ذكاء اصطناعي.</p><div class="field"><label>ما الذي تريد فهمه؟</label><textarea rows="4" placeholder="اكتب سؤالك أو الصق جزءًا من الدرس"></textarea></div><button class="action" id="tutorDemo">عرض طريقة الاستخدام</button><p class="notice hidden" id="tutorNote">في المرحلة التالية سنربط المساعد بمصادرك، مع توضيح المعلومات الإضافية وعدم الادعاء بوجود اتصال غير متاح.</p></section>`,
+ focus:`${back}<section class="panel"><h2>التركيز</h2><p class="sub">جلسة دراسة بسيطة، قابلة للتعديل.</p><div class="field"><label>المادة (اختياري)</label><input id="focusSubject" placeholder="مثل: الرياضيات"></div><div class="field"><label>مدة الجلسة بالدقائق</label><select id="duration"><option value="25">25 دقيقة</option><option value="15">15 دقيقة</option><option value="30">30 دقيقة</option><option value="45">45 دقيقة</option><option value="60">60 دقيقة</option></select></div><div class="timer" id="timer">25:00</div><div class="actions" style="justify-content:center"><button class="action" id="startTimer">ابدأ</button><button class="action secondary" id="resetTimer">إعادة ضبط</button></div><p class="notice">هذا النموذج يشغّل مؤقتًا فقط؛ حظر التطبيقات فعليًا يحتاج تكامل Android وصلاحيات خاصة.</p></section>`,
+ screentime:`${back}<section class="panel"><h2>وقت الشاشة</h2><p class="sub">مكان إعداد أهدافك. قراءة الاستخدام الفعلي تحتاج تكامل Android.</p><div class="field"><label>اختر التطبيق</label><select id="appName"><option value="">اختر تطبيقًا</option><option>YouTube</option><option>TikTok</option><option>Instagram</option><option>Facebook</option><option>WhatsApp</option><option>الألعاب</option><option>تطبيق آخر</option></select></div><div class="field"><label>الحد اليومي: <b id="limitLabel">60 دقيقة</b></label><input id="appLimit" type="range" min="5" max="240" step="5" value="60"><div style="display:flex;justify-content:space-between;color:var(--muted);font-size:11px"><span>5 دقائق</span><span>4 ساعات</span></div><input id="appLimitNumber" type="number" min="5" max="240" value="60" style="margin-top:8px"></div><button class="action" id="addLimit">حفظ الهدف على هذا الجهاز</button><div id="limitsList"></div><div class="notice">نسخة الويب لا تستطيع قراءة مدة استخدام التطبيقات الأخرى أو حظرها؛ ستحتاج هذه الوظائف إلى نسخة Android وصلاحيات واضحة.</div></section>`,
+ prayer:`${back}<section class="panel"><h2>الصلاة</h2><p class="sub">المكان المخصص لمواقيت الصلاة والأذكار والقرآن.</p><div class="field"><label>المدينة</label><input id="city" placeholder="اكتب مدينتك يدويًا"></div><div class="actions"><button class="action" id="saveCity">حفظ المدينة</button><button class="action secondary" data-open="adhkar">الأذكار</button><button class="action secondary" data-open="quran">السور</button></div><p class="notice" id="cityNote">لم يتم إعداد مواقيت الصلاة بعد. سنضيف حساب المواقيت الموثوق في مرحلة الصلاة.</p></section>`,
+ adhkar:`${back}<section class="panel"><h2>الأذكار والأدعية</h2><div class="task"><span>أذكار الصباح والمساء</span></div><div class="task"><span>أذكار بعد الصلاة</span></div><div class="task"><span>أدعية الدراسة والاختبارات</span></div><p class="notice">ستُضاف النصوص مع مراجعة مصادرها قبل النشر.</p></section>`,
+ quran:`${back}<section class="panel"><h2>السور المختارة</h2><p class="sub">قائمة أولية؛ تشغيل الصوت يحتاج مصدرًا موثوقًا واتصالًا بالإنترنت.</p>${["الفاتحة","الكهف","الملك","الرحمن","الإخلاص","الفلق","الناس"].map(x=>`<div class="task"><span>${x}</span><span class="pill">الصوت لاحقًا</span></div>`).join("")}</section>`,
+ timetable:`${back}<section class="panel"><h2>الجدول الدراسي</h2><p class="sub">أضف الحصص يدويًا في هذا النموذج؛ سنطابق جدولك الأصلي عند توفر صورته في ملفات التنفيذ.</p><div class="field"><label>اليوم</label><select id="ttDay">${days.map(d=>`<option>${d[0]}</option>`).join("")}</select></div><div class="field"><label>المادة أو المهمة</label><input id="ttSubject" placeholder="مثال: الفيزياء"></div><div class="field"><label>الوقت</label><input id="ttTime" placeholder="مثال: 08:30–09:30"></div><button class="action" id="addClass">إضافة للحصة</button><div id="ttList" style="margin-top:12px"></div></section>`,
+ settings:`${back}<section class="panel"><h2>الإعدادات</h2><p class="sub">إعدادات أساسية فقط، دون قوائم معقدة.</p><div class="field"><label>المظهر</label><select id="themeSelect"><option value="light">فاتح — كريمي</option><option value="dark">داكن</option></select></div><div class="field"><label>لغة الواجهة</label><select id="langSelect"><option value="ar">العربية</option><option value="fr">Français (قريبًا)</option><option value="en">English (قريبًا)</option></select></div><button class="action" id="saveSettings">حفظ الإعدادات</button><div class="notice">الحساب والمزامنة والنسخ الاحتياطي لم تُفعّل بعد؛ لن نعرضها كأنها تعمل قبل بناء الخادم.</div></section>`
+ };
+ v.innerHTML=views[id]||`${back}<section class="panel"><h2>${id}</h2><p class="sub">قيد الإعداد.</p></section>`;
+ if(id==="settings"){ $("#themeSelect").value=state.theme; $("#saveSettings").onclick=()=>{state.theme=$("#themeSelect").value;localStorage.setItem("noxTheme",state.theme);document.documentElement.dataset.theme=state.theme==="dark"?"dark":"light";openView("settings")};}
+ if(id==="folders"){renderFolders();$("#createFile").onclick=()=>{$("#fileForm").classList.remove("hidden");$("#folderStart").classList.add("hidden")};$("#cancelFile").onclick=()=>{$("#fileForm").classList.add("hidden");$("#folderStart").classList.remove("hidden")};$("#addFolder").onclick=()=>{let n=$("#folderName").value.trim(),f=$("#pickedFile").files[0];if(!n)return;let a=JSON.parse(localStorage.getItem("noxFolders")||"[]");a.push({name:n,fileName:f?.name||"",size:f?.size||0});localStorage.setItem("noxFolders",JSON.stringify(a));$("#folderName").value="";renderFolders();$("#fileForm").classList.add("hidden");$("#folderStart").classList.remove("hidden")};}
+ if(id==="cards"){renderCards();$("#addCard").onclick=()=>{let q=$("#cardQ").value.trim(),a=$("#cardA").value.trim();if(!q||!a)return;let cs=JSON.parse(localStorage.getItem("noxCards")||"[]");cs.push({q,a});localStorage.setItem("noxCards",JSON.stringify(cs));$("#cardQ").value="";$("#cardA").value="";renderCards()};}
+ if(id==="tutor")$("#tutorDemo").onclick=()=>$("#tutorNote").classList.remove("hidden");
+ if(id==="focus"){let seconds=Number($("#duration").value)*60,interval=null;const paint=()=>$("#timer").textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0");$("#duration").onchange=()=>{if(interval)clearInterval(interval);interval=null;seconds=Number($("#duration").value)*60;paint();$("#startTimer").textContent="ابدأ"};$("#startTimer").onclick=()=>{if(interval){clearInterval(interval);interval=null;$("#startTimer").textContent="استئناف";return}$("#startTimer").textContent="إيقاف مؤقت";interval=setInterval(()=>{seconds--;paint();if(seconds<=0){clearInterval(interval);interval=null;state.sessions++;save();renderWeek();$("#startTimer").textContent="اكتملت الجلسة";}},1000)};$("#resetTimer").onclick=()=>{if(interval)clearInterval(interval);interval=null;seconds=Number($("#duration").value)*60;paint();$("#startTimer").textContent="ابدأ"};paint();}
+ if(id==="screentime"){renderLimits();$("#appLimit").oninput=()=>{$("#limitLabel").textContent=$("#appLimit").value+" دقيقة";$("#appLimitNumber").value=$("#appLimit").value};$("#appLimitNumber").oninput=()=>{let m=Math.max(5,Math.min(240,Number($("#appLimitNumber").value)||5));$("#appLimit").value=m;$("#limitLabel").textContent=m+" دقيقة"};$("#addLimit").onclick=()=>{let n=$("#appName").value.trim(),m=Number($("#appLimitNumber").value);if(!n||m<1)return;let a=JSON.parse(localStorage.getItem("noxLimits")||"[]");a.push({n,m});localStorage.setItem("noxLimits",JSON.stringify(a));renderLimits();$("#appName").value="";$("#appLimit").value="60";$("#appLimitNumber").value="60";$("#limitLabel").textContent="60 دقيقة"};}
+ if(id==="prayer"){let city=localStorage.getItem("noxCity");if(city){$("#city").value=city;$("#cityNote").textContent="المدينة المحفوظة: "+city+" — مواقيت الصلاة الفعلية ستُضاف بعد ربط مصدر موثوق."}$("#saveCity").onclick=()=>{let c=$("#city").value.trim();if(c){localStorage.setItem("noxCity",c);$("#cityNote").textContent="تم حفظ المدينة على هذا الجهاز: "+c}};}
+ if(id==="timetable"){renderTT();$("#addClass").onclick=()=>{let d=$("#ttDay").value,s=$("#ttSubject").value.trim(),t=$("#ttTime").value.trim();if(!s)return;(state.timetable[d] ||= []).push({subject:s,time:t});save();renderTT();renderWeek();$("#ttSubject").value="";$("#ttTime").value=""};}
+}
+function renderFolders(){let a=JSON.parse(localStorage.getItem("noxFolders")||"[]");$("#folderList").innerHTML=a.length?a.map((x,i)=>`<div class="task"><span>📄 ${escapeHtml(typeof x==="string"?x:x.name)}<small>${typeof x==="string"?"ملف محلي":escapeHtml(x.fileName||"لم يتم اختيار ملف")} ${x.size?"· "+Math.round(x.size/1024)+" KB":""}</small></span><button class="small-btn" data-del-folder="${i}">حذف</button></div>`).join(""):"<p class='sub'>لا توجد مجلدات بعد.</p>";document.querySelectorAll("[data-del-folder]").forEach(b=>b.onclick=()=>{a.splice(+b.dataset.delFolder,1);localStorage.setItem("noxFolders",JSON.stringify(a));renderFolders()})}
+function renderCards(){let a=JSON.parse(localStorage.getItem("noxCards")||"[]");$("#cardList").innerHTML=a.length?a.map((c,i)=>`<details class="task" style="display:block"><summary>${escapeHtml(c.q)}</summary><p>${escapeHtml(c.a)}</p><div class="actions"><button class="action secondary" data-rate="${i}">أحتاج مراجعة</button><button class="action secondary" data-del-card="${i}">حذف</button></div></details>`).join(""):"<p class='sub' style='margin-top:15px'>لم تضف بطاقات بعد.</p>";document.querySelectorAll("[data-del-card]").forEach(b=>b.onclick=()=>{a.splice(+b.dataset.delCard,1);localStorage.setItem("noxCards",JSON.stringify(a));renderCards()});document.querySelectorAll("[data-rate]").forEach(b=>b.onclick=()=>alert("سيُربط تقييم البطاقة بجدول المراجعة المتباعدة في مرحلة لاحقة."))}
+function renderLimits(){let a=JSON.parse(localStorage.getItem("noxLimits")||"[]");$("#limitsList").innerHTML=a.map(x=>`<div class="subject-row"><span>${escapeHtml(x.n)}<small style="display:block;color:var(--muted)">الهدف: ${x.m} دقيقة يوميًا</small></span><span class="pill">هدف فقط</span></div>`).join("")}
+function renderTT(){let rows=[];Object.entries(state.timetable).forEach(([d,arr])=>arr.forEach(x=>rows.push(`<div class="subject-row"><span>${escapeHtml(d)}<small style="display:block;color:var(--muted)">${escapeHtml(x.time||"وقت غير محدد")}</small></span><b>${escapeHtml(x.subject)}</b></div>`)));$("#ttList").innerHTML=rows.join("")||"<p class='sub'>لا توجد حصص مضافة بعد.</p>"}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+document.addEventListener("click",e=>{
+ const slot=e.target.closest("[data-home-slot]");if(slot){const idx=Number(slot.dataset.homeSlot),js=new Date().getDay(),di=js===0?6:js-1,day=days[di][0],current=(state.timetable[day]||[])[idx];const value=prompt("اكتب اسم المادة أو المهمة:",current?.subject||"");if(value!==null){state.timetable[day] ||= [];state.timetable[day][idx]={subject:value.trim(),time:["08:30–09:20","09:30–10:20","10:30–11:20","11:30–12:20","14:00–14:50","15:00–15:50"][idx]};save();renderWeek()}return}
+ let b=e.target.closest("[data-open]");if(b)openView(b.dataset.open);
+ if(e.target.closest("[data-back]")){const prev=navStack.pop()||"home";if(prev==="home"){$("#view").classList.add("hidden");$("#home").classList.remove("hidden");$("#view").dataset.current="";renderWeek()}else{openView(prev,false)}}
+});
+$("#settingsBtn").onclick=()=>openView("settings");
+renderWeek();
+</script>
+</body>
+</html>
