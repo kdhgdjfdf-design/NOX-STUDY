@@ -80,7 +80,7 @@ const focusQuotes=["﴿ وَقُلْ رَبِّ زِدْنِي عِلْمًا �
 let focusQuoteCursor=-1;
 function openQuoteGate(){focusQuoteCursor=(focusQuoteCursor+1)%focusQuotes.length;$("#quoteGateText").textContent=focusQuotes[focusQuoteCursor];quoteGate.classList.add("open");quoteGate.setAttribute("aria-hidden","false")}
 function closeQuoteGate(){if(!quoteGate.classList.contains("open"))return;quoteGate.classList.remove("open");quoteGate.setAttribute("aria-hidden","true");if(typeof focusStartHandler==="function")focusStartHandler()}
-$("#startFocus").onclick=()=>openQuoteGate();quoteGate.addEventListener("click",closeQuoteGate);quoteGate.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();closeQuoteGate()}});
+$("#startFocus").onclick=()=>{if(running){if(typeof focusStartHandler==="function")focusStartHandler();return}openQuoteGate()};quoteGate.addEventListener("click",closeQuoteGate);quoteGate.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();closeQuoteGate()}});
 
 renderTasks();renderPages();renderCards();renderNotes();renderAchievements();goalPaint();
 </script></body></html>
