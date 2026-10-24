@@ -15,12 +15,25 @@ h1{font-size:clamp(25px,5vw,32px)}h2{font-size:clamp(21px,4.5vw,27px)}h3{font-si
 .review-source h3{font-size:clamp(19px,4vw,24px);margin-bottom:8px;color:var(--ink)}
 .review-source input,.review-source textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);margin:5px 0 10px}
 .review-source iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:13px;background:#111;margin-top:10px}
-.quote-gate{position:fixed;inset:0;z-index:120;background:rgba(8,10,18,.96);color:#fff;display:none;align-items:center;justify-content:center;padding:26px;text-align:center;cursor:pointer}
-.quote-gate.open{display:flex}.quote-gate .quote-inner{max-width:520px;animation:quoteRise .5s ease both}
-.quote-gate .quote-mark{font-size:34px;color:#b9a7ff;margin-bottom:18px}
-.quote-gate h2{font-size:clamp(25px,6vw,36px);line-height:1.8;color:#fff!important;margin:0 0 16px}
-.quote-gate p{color:#e4e4ed;font-size:14px}
-@keyframes quoteRise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.quote-gate{position:fixed;inset:0;z-index:120;background:radial-gradient(circle at 50% 12%,#28214a 0,transparent 42%),rgba(8,10,18,.98);color:#fff;display:none;align-items:center;justify-content:center;padding:22px;text-align:center;cursor:pointer}
+.quote-gate.open{display:flex}.quote-gate .quote-inner{position:relative;width:min(100%,560px);padding:clamp(28px,7vw,48px) clamp(20px,6vw,42px);border:1px solid #a99af0;border-radius:28px;background:linear-gradient(145deg,rgba(35,29,65,.98),rgba(18,21,39,.98) 62%,rgba(42,23,48,.98));box-shadow:0 0 0 6px #a99af01a,0 22px 75px #0009, inset 0 0 36px #8d76ff12;animation:quoteRise .5s ease both}
+.quote-gate .quote-inner:before,.quote-gate .quote-inner:after{content:"✦  ✧  ✦";position:absolute;left:0;right:0;color:#c8bcff;letter-spacing:13px;font-size:17px;opacity:.85}
+.quote-gate .quote-inner:before{top:13px}.quote-gate .quote-inner:after{bottom:13px}
+.quote-gate .quote-mark{font-size:42px;color:#e5b8ff;margin:0 0 18px;text-shadow:0 0 25px #a88cffaa}
+.quote-gate h2{font-size:clamp(29px,7vw,42px);line-height:1.9;color:#fff!important;margin:0 0 18px;text-shadow:0 3px 24px #9e8aff35}
+.quote-gate p{color:#e4e4ed;font-size:15px;margin:8px 0}.quote-gate p:last-child{display:inline-block;margin-top:18px;padding:8px 16px;border:1px solid #a99af066;border-radius:999px;color:#d6ceff;background:#a99af010}
+.pdf-viewer{padding:0!important;gap:0!important;background:#080a12!important}
+.pdf-head{flex:0 0 auto;border:0!important;border-bottom:1px solid #292b3c!important;border-radius:0!important;background:#101321!important;color:#fff;padding:calc(9px + env(safe-area-inset-top)) 12px 9px!important}
+.pdf-head strong{color:#fff}.pdf-head #closePdf{font-size:0;min-width:42px;background:#25283a;color:#fff;border-color:#41445a}
+.pdf-head #closePdf:after{content:"← رجوع";font-size:14px}
+.pdf-tools{flex:0 0 auto;padding:7px 10px;background:#101321;overflow-x:auto;flex-wrap:nowrap}
+.pdf-tools button{white-space:nowrap;background:#1b1e30;color:#f5f5ff;border-color:#353950}
+.pdf-tools button.active{background:#6558d9;border-color:#8b7dff;color:#fff}
+.pdf-tools label{white-space:nowrap;color:#fff}
+.pdf-stage{flex:1;min-height:0;border:0!important;border-radius:0!important;background:#080a12!important}
+.pdf-stage iframe{background:#fff}
+.pdf-foot{flex:0 0 auto;padding:5px;background:#101321;color:#aeb2ca}
+@keyframes quoteRise{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 </style></head><body>
 <div class="shell">
 <header class="top"><div class="brand"><div class="logo">N</div><div><h1>NOX STUDY 📚</h1><p>مكان واحد للتنظيم والتركيز والتعلّم</p></div></div><button class="iconbtn" id="themeBtn" aria-label="تبديل المظهر">◐</button></header>
