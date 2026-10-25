@@ -194,7 +194,7 @@ $("#townLevel").textContent="المستوى "+level;$("#townTitle").textContent=
 $("#townCoins").textContent=t.coins;$("#townXP").textContent=t.xp;$("#townSessions").textContent=t.sessions;$("#townXPBar").style.width=progress+"%";
 $("#townNext").textContent=progress+" / 100 خبرة للمستوى التالي • كل دقيقة تركيز مكتملة = نقطة خبرة";
 const character=$("#townCharacter"),petArt=$("#townPetArt"),room=$(".room-art");
-const boy=$("#townBoyPortrait");if(boy)boy.style.display=t.gender==="boy"?"":"none";if(character)character.style.display=t.gender==="boy"?"none":"";const genderButton=$("#townGenderToggle");if(genderButton){genderButton.textContent=t.gender==="boy"?"الشخصية الحالية: ولد — اضغط للتبديل إلى بنت":"الشخصية الحالية: بنت — اضغط للتبديل إلى ولد";genderButton.onclick=()=>{const state=townState();state.gender=state.gender==="boy"?"girl":"boy";put("town",state);renderTown(state.gender==="boy"?"تم تبديل الشخصية إلى الولد.":"تم تبديل الشخصية إلى البنت.")}}
+const boy=$("#townBoyPortrait");if(boy)boy.style.display="none";if(character)character.style.display="";const genderButton=$("#townGenderToggle");if(genderButton){genderButton.textContent=t.gender==="boy"?"الشخصية الحالية: ولد — اضغط للتبديل إلى بنت":"الشخصية الحالية: بنت — اضغط للتبديل إلى ولد";genderButton.onclick=()=>{const state=townState();state.gender=state.gender==="boy"?"girl":"boy";put("town",state);renderTown(state.gender==="boy"?"تم تبديل الشخصية إلى الولد.":"تم تبديل الشخصية إلى البنت.")}}
 if(character){
  const clothes=character.querySelector('path[fill="#315a91"]');
  if(clothes)clothes.setAttribute("fill",e.outfit==="hoodie"?"#3b3b51":e.outfit==="cap"?"#50417d":e.outfit==="cape"?"#4b3478":e.outfit==="headphones"?"#5544a0":"#315a91");
