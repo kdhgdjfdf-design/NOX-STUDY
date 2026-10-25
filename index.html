@@ -127,22 +127,26 @@ $("#focusMins").onchange=timerReset;$("#startFocus").onclick=()=>{if(running){cl
 $("#resetFocus").onclick=timerReset;function getStats(){return get("stats",{focus:0,reviews:0,streak:0,lastDay:""})} function achievementList(){const s=getStats(),mins=goalMinutes(),hours=Number(activeGoal.hours)||1,base=[{icon:activeGoal.icon||"✨",name:"بداية الرحلة",desc:"ركّز 30 دقيقة على "+(activeGoal.name||"هدفك"),ok:mins>=30},{icon:"⭐",name:"خطوة ثابتة",desc:"اجمع ساعتين لهدفك",ok:mins>=120},{icon:"🏆",name:"نصف الطريق",desc:"أنجز نصف الساعات المحددة",ok:mins>=hours*30},{icon:"🎯",name:"وصلت للهدف",desc:"أكمل الساعات التي حددتها",ok:mins>=hours*60}];return [...base,{icon:"🧠",name:"ذاكرة نشيطة",desc:"راجع 5 بطاقات",ok:s.reviews>=5},{icon:"✨",name:"توازن جميل",desc:"جلسة تركيز و3 مراجعات",ok:s.focus>=1&&s.reviews>=3}]} function renderAchievements(){const a=achievementList();$("#homeAchievements").innerHTML=a.map(x=>'<div class="achievement '+(x.ok?"unlocked":"")+'"><div class="medal">'+x.icon+'</div><strong>'+esc(x.name)+'</strong><small>'+esc(x.desc)+'</small></div>').join("");const n=a.filter(x=>x.ok).length;$("#homeReward").style.display=n?"block":"none";$("#homeReward").textContent=n?"✨ فتحت "+n+" من "+a.length+" إنجازات — كل خطوة تُحسب!":""} function recordFocus(){const history=get("studyHistory",[]);history.push({type:"focus",date:new Date().toISOString().slice(0,10),minutes:Math.round(total/60),at:Date.now()});put("studyHistory",history);townReward(Math.round(total/60));const s=getStats();s.focus++;const d=new Date().toISOString().slice(0,10);if(s.lastDay!==d){s.streak=s.lastDay===new Date(Date.now()-86400000).toISOString().slice(0,10)?s.streak+1:1;s.lastDay=d}put("stats",s);renderAchievements();$("#focusReward").style.display="block";$("#focusReward").textContent="🌟 أضفت "+Math.round(total/60)+" دقيقة فعلية إلى: "+activeGoal.name+". تابع رحلتك!";} function notifyUser(title,body){try{if("Notification" in window&&Notification.permission==="granted")new Notification(title,{body});}catch(e){}}$("#notifyEnable").onclick=async()=>{if(!( "Notification" in window)){$("#notifyStatus").textContent="الإشعارات غير مدعومة هنا؛ جرّب تثبيت التطبيق من المتصفح.";return}try{const p=await Notification.requestPermission();$("#notifyStatus").textContent=p==="granted"?"تم تفعيل الإشعارات":"لم يتم السماح بالإشعارات";if(p==="granted")notifyUser("Study Space","ستظهر إشعارات عند إكمال جلسة التركيز.")}catch(e){$("#notifyStatus").textContent="افتح التطبيق من المتصفح واسمح بالإشعارات."}};
 
 const townItems=[
-{id:"cap",icon:"🧢",name:"قبعة بنفسجية",cost:15,category:"outfit",avatar:"🧑‍🎓 🧢"},
-{id:"hoodie",icon:"🧥",name:"سترة مريحة",cost:18,category:"outfit",avatar:"🧑‍🎓 🧥"},
-{id:"cape",icon:"🦸",name:"عباءة بطل",cost:40,category:"outfit",avatar:"🦸"},
-{id:"crown",icon:"👑",name:"تاج الإنجاز",cost:60,category:"outfit",avatar:"👑"},
-{id:"cat",icon:"🐈",name:"رفيق قط",cost:25,category:"pet",avatar:"🐈"},
-{id:"fox",icon:"🦊",name:"ثعلب صغير",cost:35,category:"pet",avatar:"🦊"},
-{id:"bunny",icon:"🐇",name:"أرنب لطيف",cost:30,category:"pet",avatar:"🐇"},
-{id:"lamp",icon:"🪔",name:"مصباح دافئ",cost:20,category:"decor",avatar:"🪔"},
-{id:"plant",icon:"🌵",name:"نبتة مكتبية",cost:12,category:"decor",avatar:"🌵"},
-{id:"poster",icon:"🌙",name:"لوحة القمر",cost:22,category:"decor",avatar:"🌙"},
-{id:"books",icon:"📚",name:"رف كتب إضافي",cost:28,category:"decor",avatar:"📚"},
-{id:"cushion",icon:"🛋️",name:"وسادة مريحة",cost:24,category:"decor",avatar:"🛋️"},
-{id:"window",icon:"🌌",name:"نافذة ليلية",cost:32,category:"decor",avatar:"🌌"},
-{id:"desk",icon:"🪵",name:"مكتب خشبي",cost:38,category:"furniture",avatar:"🪵"},
-{id:"chair",icon:"🪑",name:"كرسي مريح",cost:34,category:"furniture",avatar:"🪑"},
-{id:"clock",icon:"🕰️",name:"ساعة حائط",cost:26,category:"decor",avatar:"🕰️"}
+{id:"cap",icon:"🧢",name:"قبعة بنفسجية",cost:15,category:"outfit"},
+{id:"hoodie",icon:"🧥",name:"سترة ليلية",cost:18,category:"outfit"},
+{id:"cape",icon:"🦸",name:"عباءة بنفسجية",cost:40,category:"outfit"},
+{id:"crown",icon:"👑",name:"تاج الإنجاز",cost:60,category:"outfit"},
+{id:"cat",icon:"🐈",name:"قط برتقالي",cost:25,category:"pet"},
+{id:"fox",icon:"🦊",name:"ثعلب صغير",cost:35,category:"pet"},
+{id:"bunny",icon:"🐇",name:"أرنب أبيض",cost:30,category:"pet"},
+{id:"lamp",icon:"💡",name:"مصباح مكتب",cost:20,category:"decor"},
+{id:"plant",icon:"🪴",name:"نبتة خضراء",cost:12,category:"decor"},
+{id:"poster",icon:"🌙",name:"لوحة القمر",cost:22,category:"decor"},
+{id:"books",icon:"📚",name:"رف كتب إضافي",cost:28,category:"decor"},
+{id:"cushion",icon:"🛋️",name:"وسادة بنفسجية",cost:24,category:"furniture"},
+{id:"window",icon:"🌌",name:"نافذة ليلية",cost:32,category:"decor"},
+{id:"desk",icon:"🪵",name:"مكتب داكن",cost:38,category:"furniture"},
+{id:"chair",icon:"🪑",name:"كرسي دراسة",cost:34,category:"furniture"},
+{id:"clock",icon:"🕰️",name:"ساعة حائط",cost:26,category:"decor"},
+{id:"rug",icon:"🟣",name:"سجادة بنفسجية",cost:18,category:"furniture"},
+{id:"mug",icon:"☕",name:"كوب ساخن",cost:14,category:"decor"},
+{id:"star",icon:"✨",name:"أضواء النجوم",cost:29,category:"decor"},
+{id:"headphones",icon:"🎧",name:"سماعات بنفسجية",cost:33,category:"outfit"}
 ];
 function updateTownClock(){const now=new Date(),time=now.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",hour12:false}),date=now.toLocaleDateString("ar-MA",{day:"2-digit",month:"2-digit"});const clock=$("#townClock"),day=$("#townDate"),art=$("#townClockArt");if(clock)clock.textContent=time;if(day)day.textContent=date;if(art)art.textContent=time}
 updateTownClock();setInterval(updateTownClock,1000);
@@ -153,10 +157,24 @@ const t=townState(),level=Math.floor(t.xp/100)+1,progress=t.xp%100,e=t.equippedB
 $("#townLevel").textContent="المستوى "+level;$("#townTitle").textContent=level>=10?"حارس المدينة":level>=5?"مستكشف المدينة":level>=3?"باني صغير":"مبتدئ هادئ";
 $("#townCoins").textContent=t.coins;$("#townXP").textContent=t.xp;$("#townSessions").textContent=t.sessions;$("#townXPBar").style.width=progress+"%";
 $("#townNext").textContent=progress+" / 100 خبرة للمستوى التالي • كل دقيقة تركيز مكتملة = نقطة خبرة";
-const outfit=townItems.find(x=>x.id===e.outfit),pet=townItems.find(x=>x.id===e.pet),character=$("#townCharacter"),petArt=$("#townPetArt");
-if(character){character.style.filter=e.outfit==="cape"?"drop-shadow(0 0 0 #6c56ba)":e.outfit==="crown"?"drop-shadow(0 -10px 0 #e8c65a)":"";const clothes=character.querySelector("path[fill=\"#315a91\"]");if(clothes)clothes.setAttribute("fill",e.outfit==="hoodie"?"#3b3b51":e.outfit==="cap"?"#50417d":e.outfit==="cape"?"#4b3478":"#315a91");}
-if(petArt){petArt.style.display="";petArt.style.filter=pet&&pet.id==="fox"?"hue-rotate(25deg) saturate(1.3)":pet&&pet.id==="bunny"?"grayscale(.35) brightness(1.18)":"";}
-const desk=$("#townClockArt");if(desk&&e.decor==="clock")desk.setAttribute("fill","#d7c6ff");
+const character=$("#townCharacter"),petArt=$("#townPetArt"),room=$(".room-art");
+if(character){
+ const clothes=character.querySelector('path[fill="#315a91"]');
+ if(clothes)clothes.setAttribute("fill",e.outfit==="hoodie"?"#3b3b51":e.outfit==="cap"?"#50417d":e.outfit==="cape"?"#4b3478":e.outfit==="headphones"?"#5544a0":"#315a91");
+ let hat=$("#townHat"),crown=$("#townCrown"),phones=$("#townPhones");
+ if(hat)hat.style.display=e.outfit==="cap"?"":"none";
+ if(crown)crown.style.display=e.outfit==="crown"?"":"none";
+ if(phones)phones.style.display=e.outfit==="headphones"?"":"none";
+}
+if(petArt){
+ petArt.style.display="";
+ const petBody=petArt.querySelector('path[fill="#e8a76b"]');
+ if(petBody)petBody.setAttribute("fill",e.pet==="fox"?"#d87943":e.pet==="bunny"?"#f1e8dc":"#e8a76b");
+ petArt.style.filter=e.pet==="fox"?"hue-rotate(0deg) saturate(1.3)":e.pet==="bunny"?"grayscale(.35) brightness(1.18)":"";
+}
+const show=(id,on)=>{const el=$("#"+id);if(el)el.style.display=on?"":"none"};
+show("townLamp",e.decor==="lamp");show("townPlant",e.decor==="plant");show("townPoster",e.decor==="poster");show("townBooks",e.decor==="books");show("townWindow",e.decor==="window");show("townWallClock",e.decor==="clock");show("townMug",e.decor==="mug");show("townStars",e.decor==="star");show("townCushion",e.furniture==="cushion");show("townRug",e.furniture==="rug");show("townChair",e.furniture==="chair");
+const desk=$("#townDeskSurface");if(desk)desk.setAttribute("fill",e.furniture==="desk"?"#49343f":"url(#wood)");
 const categories=[["outfit","الملابس"],["pet","الحيوانات الأليفة"],["furniture","الأثاث"],["decor","الديكور"]];
 $("#townShop").innerHTML=categories.map(([cat,label])=>'<h4 class="town-shop-title" style="grid-column:1/-1">'+label+'</h4>'+townItems.filter(x=>x.category===cat).map(x=>{const owned=t.owned.includes(x.id),equipped=e[cat]===x.id;return '<div class="town-item"><div class="item-emoji">'+x.icon+'</div><strong>'+esc(x.name)+'</strong><small>'+(owned?(equipped?"مُجهّز":"تم فتحه"):"🪙 "+x.cost+" عملة")+'</small><button class="btn '+(equipped?"soft":"")+'" data-town-item="'+x.id+'" '+(!owned&&t.coins<x.cost?"disabled":"")+'>'+(equipped?"مُجهّز":owned?"تجهيز":"فتح العنصر")+'</button></div>'}).join("")).join("");
 $("[data-town-item]").forEach(b=>b.onclick=()=>{const item=townItems.find(x=>x.id===b.dataset.townItem),state=townState();if(state.owned.includes(item.id)){state.equippedByCategory[item.category]=item.id;put("town",state);renderTown("تم تجهيز "+item.name+".")}else if(state.coins>=item.cost){state.coins-=item.cost;state.owned.push(item.id);state.equippedByCategory[item.category]=item.id;put("town",state);renderTown("فتحت "+item.name+" بعملات جمعتها من جلساتك.")}});
