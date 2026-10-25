@@ -126,6 +126,87 @@ body[data-theme="dark"] .tile:nth-child(6) {
 body[data-theme="dark"] .tile:nth-child(5) *,
 body[data-theme="dark"] .tile:nth-child(6) * {color:#f4f7ff!important}
 
+
+/* Dark-mode contrast sweep: forms and every light card, not just challenge/account cards. */
+body[data-theme="dark"] .card,
+body[data-theme="dark"] .panel,
+body[data-theme="dark"] .item,
+body[data-theme="dark"] .tile,
+body[data-theme="dark"] .note-card,
+body[data-theme="dark"] .page-card,
+body[data-theme="dark"] .task-card,
+body[data-theme="dark"] .review-card,
+body[data-theme="dark"] .study-card,
+body[data-theme="dark"] .achievement-card,
+body[data-theme="dark"] .daily-goal-panel,
+body[data-theme="dark"] .study-circle,
+body[data-theme="dark"] .review-source,
+body[data-theme="dark"] .flashcard,
+body[data-theme="dark"] .flashcard .a,
+body[data-theme="dark"] .challenge-progress,
+body[data-theme="dark"] .duel-target,
+body[data-theme="dark"] .duel-result,
+body[data-theme="dark"] .friend-code-row code,
+body[data-theme="dark"] .challenge-card,
+body[data-theme="dark"] .duel-player,
+body[data-theme="dark"] .mini-memo,
+body[data-theme="dark"] .pomodoro-settings,
+body[data-theme="dark"] .pdf-tools,
+body[data-theme="dark"] .pdf-memo {
+  background:#202b40!important;
+  color:#f4f7ff!important;
+  border-color:#52627d!important;
+}
+body[data-theme="dark"] .card *,
+body[data-theme="dark"] .panel *,
+body[data-theme="dark"] .item *,
+body[data-theme="dark"] .tile *,
+body[data-theme="dark"] .note-card *,
+body[data-theme="dark"] .page-card *,
+body[data-theme="dark"] .task-card *,
+body[data-theme="dark"] .review-card *,
+body[data-theme="dark"] .study-card *,
+body[data-theme="dark"] .achievement-card *,
+body[data-theme="dark"] .daily-goal-panel *,
+body[data-theme="dark"] .study-circle *,
+body[data-theme="dark"] .review-source *,
+body[data-theme="dark"] .flashcard *,
+body[data-theme="dark"] .challenge-progress *,
+body[data-theme="dark"] .duel-target *,
+body[data-theme="dark"] .duel-result *,
+body[data-theme="dark"] .friend-code-row code,
+body[data-theme="dark"] .challenge-card *,
+body[data-theme="dark"] .duel-player *,
+body[data-theme="dark"] .mini-memo *,
+body[data-theme="dark"] .pomodoro-settings *,
+body[data-theme="dark"] .pdf-tools *,
+body[data-theme="dark"] .pdf-memo * {
+  color:#f4f7ff!important;
+}
+body[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="color"]),
+body[data-theme="dark"] textarea,
+body[data-theme="dark"] select,
+body[data-theme="dark"] .field input,
+body[data-theme="dark"] .field textarea,
+body[data-theme="dark"] .field select,
+body[data-theme="dark"] .review-source input,
+body[data-theme="dark"] .review-source textarea,
+body[data-theme="dark"] .mini-memo textarea,
+body[data-theme="dark"] .pomodoro-fields input {
+  background:#101827!important;color:#f5f7ff!important;
+  border-color:#657795!important;-webkit-text-fill-color:#f5f7ff!important;
+  color-scheme:dark;
+}
+body[data-theme="dark"] input::placeholder,
+body[data-theme="dark"] textarea::placeholder {
+  color:#b7c5dc!important;opacity:1!important;-webkit-text-fill-color:#b7c5dc!important;
+}
+body[data-theme="dark"] .sub,
+body[data-theme="dark"] .empty,
+body[data-theme="dark"] .item small,
+body[data-theme="dark"] small,
+body[data-theme="dark"] .muted {color:#c5d0e4!important}
+
 </style></head><body>
 <div class="shell">
 <header class="top"><div class="brand"><div class="logo">N</div><div><h1>NOX STUDY 📚</h1><p>مكان واحد للتنظيم والتركيز والتعلّم</p></div></div><button class="iconbtn" id="themeBtn" aria-label="تبديل المظهر">◐</button></header>
@@ -251,7 +332,7 @@ function notifyUser(title,body){try{if("Notification" in window&&Notification.pe
 
 const NOX_SUPABASE_URL="https://ohuffzugxmaewdeyckgc.supabase.co";
 const NOX_SUPABASE_KEY="sb_publishable_m-xcNtE-wIr1HrrN86R3vQ_7MDqC_Mk";
-const noxSupabase=window.supabase?.createClient(NOX_SUPABASE_URL,NOX_SUPABASE_KEY);
+const noxSupabase=window.supabase?.createClient(NOX_SUPABASE_URL,NOX_SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storage:window.localStorage,storageKey:"nox-study-auth"}});
 let noxCurrentUser=null;
 function renderFriends(){if(noxCurrentUser)loadNoxProfileAndFriends()}
 function noxAuthMessage(msg){const el=$("#noxAuthStatus");if(el)el.textContent=msg}
