@@ -277,5 +277,5 @@ function openQuoteGate(){focusQuoteCursor=(focusQuoteCursor+1)%focusQuotes.lengt
 function closeQuoteGate(){if(!quoteGate.classList.contains("open"))return;quoteGate.classList.remove("open");quoteGate.setAttribute("aria-hidden","true");if(typeof focusStartHandler==="function")focusStartHandler()}
 $("#startFocus").onclick=()=>{if(running){if(typeof focusStartHandler==="function")focusStartHandler();return}openQuoteGate()};quoteGate.addEventListener("click",closeQuoteGate);quoteGate.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();closeQuoteGate()}});
 
-renderTasks();renderPages();renderCards();renderNotes();renderAchievements();renderStudyCircle();goalPaint();
+renderTasks();renderPages();renderCards();renderNotes();renderAchievements();renderStudyCircle();paintDailyGoal();goalPaint();
 </script></body></html>
