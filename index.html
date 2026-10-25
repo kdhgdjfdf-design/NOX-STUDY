@@ -72,6 +72,60 @@ body[data-theme="dark"] .empty,
 body[data-theme="dark"] .item small{color:#c2cce0}
 body[data-theme="dark"] option{background:#101827;color:#f5f7ff}
 body[data-theme="dark"] .pomodoro-settings{color:#f0f2ff}
+
+/* Dark mode: prevent light cards from inheriting white text. */
+body[data-theme="dark"] .review-source,
+body[data-theme="dark"] .flashcard,
+body[data-theme="dark"] .flashcard .a,
+body[data-theme="dark"] .daily-goal-panel,
+body[data-theme="dark"] .study-circle,
+body[data-theme="dark"] .challenge-progress,
+body[data-theme="dark"] .duel-target,
+body[data-theme="dark"] .duel-result,
+body[data-theme="dark"] .friend-code-row code {
+  background:linear-gradient(145deg,#202b40,#182337)!important;
+  color:#f4f7ff!important;
+  border-color:#596b8a!important;
+}
+body[data-theme="dark"] .review-source h3,
+body[data-theme="dark"] .flashcard .q,
+body[data-theme="dark"] .flashcard .a,
+body[data-theme="dark"] .daily-goal-panel *,
+body[data-theme="dark"] .study-circle *,
+body[data-theme="dark"] .challenge-progress *,
+body[data-theme="dark"] .duel-target *,
+body[data-theme="dark"] .duel-result,
+body[data-theme="dark"] .friend-code-row code {
+  color:#f4f7ff!important;
+}
+body[data-theme="dark"] .flashcard:before {color:#d7c8ff!important}
+body[data-theme="dark"] .challenge-card.c-violet,
+body[data-theme="dark"] .challenge-card.c-coral,
+body[data-theme="dark"] .challenge-card.c-cyan,
+body[data-theme="dark"] .challenge-card.c-lime,
+body[data-theme="dark"] .duel-player.me,
+body[data-theme="dark"] .duel-player.friend {
+  background:linear-gradient(145deg,#202b40,#182337)!important;
+  color:#f4f7ff!important;
+  border-color:#596b8a!important;
+}
+body[data-theme="dark"] .challenge-card h3,
+body[data-theme="dark"] .challenge-card p,
+body[data-theme="dark"] .duel-player *,
+body[data-theme="dark"] .challenge-card .btn {
+  color:#f4f7ff!important;
+}
+body[data-theme="dark"] .challenge-card .btn {
+  background:#33425d!important;border-color:#657795!important;
+}
+body[data-theme="dark"] .tile:nth-child(5),
+body[data-theme="dark"] .tile:nth-child(6) {
+  background:linear-gradient(145deg,#202b40,#182337)!important;
+  border-color:#596b8a!important;color:#f4f7ff!important;
+}
+body[data-theme="dark"] .tile:nth-child(5) *,
+body[data-theme="dark"] .tile:nth-child(6) * {color:#f4f7ff!important}
+
 </style></head><body>
 <div class="shell">
 <header class="top"><div class="brand"><div class="logo">N</div><div><h1>NOX STUDY 📚</h1><p>مكان واحد للتنظيم والتركيز والتعلّم</p></div></div><button class="iconbtn" id="themeBtn" aria-label="تبديل المظهر">◐</button></header>
