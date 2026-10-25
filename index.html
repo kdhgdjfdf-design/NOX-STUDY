@@ -55,11 +55,64 @@ h1{font-size:clamp(25px,5vw,32px)}h2{font-size:clamp(21px,4.5vw,27px)}h3{font-si
 <button class="tile" data-view="notes"><span class="tile-icon">✎</span><span><h3>Free Notes</h3><p>اكتب وارسم واستورد ملفات PDF</p></span></button>
 <button class="tile" data-view="challenges"><span class="tile-icon" style="background:linear-gradient(135deg,#ffb84d,#ff6b8a);color:#fff">🏆</span><span><h3>التحديات</h3><p>تحديات يومية وأسبوعية تحفّزك على الاستمرار</p></span></button><button class="tile" data-view="friends"><span class="tile-icon" style="background:linear-gradient(135deg,#38c7d9,#5b6cff);color:#fff">👥</span><span><h3>الأصدقاء</h3><p>كودك وطلبات الصداقة — مزامنة الأصدقاء لاحقًا</p></span></button>
 </div><div class="section-title"><h2>إنجازاتك الصغيرة</h2></div><div id="homeAchievements" class="achievements"></div><div id="homeReward" class="reward-toast" style="display:none"></div><div class="section-title"><h2>تذكير لطيف</h2></div><div class="panel"><p id="homeQuote" style="margin:0">لا تحتاج لإنجاز كل شيء دفعة واحدة. اختر خطوة صغيرة وابدأ بها.</p><div class="row" style="margin-top:10px"><button class="btn" id="notifyEnable">🔔 تفعيل الإشعارات</button><span id="notifyStatus" class="sub" style="margin:0"></span></div></div></section>
-<section id="challenges" class="view"><button class="back" data-view="home">← الرئيسية</button><div class="challenge-hero"><div class="challenge-emoji">🏆</div><h2>تحديات NOX</h2><p>اختر تحديًا واقعيًا، وأنجزه خطوة بخطوة. تقدمك محفوظ على هذا الجهاز.</p></div><div class="challenge-grid"><div class="challenge-card c-violet"><span>📚</span><h3>هدف 10 ساعات مذاكرة</h3><p>اجمع 10 ساعات تركيز فعلية من جلساتك المكتملة، لا مجرد عدد جلسات.</p><button class="btn" data-challenge="focus">ابدأ المذاكرة</button></div><div class="challenge-card c-coral"><span>🧠</span><h3>مراجعة ذكية</h3><p>راجع 5 بطاقات دراسية.</p><button class="btn" data-challenge="cards">اذهب للبطاقات</button></div><div class="challenge-card c-cyan"><span>🗓️</span><h3>لا تؤجل</h3><p>أكمل 3 مهام من قائمة التنظيم.</p><button class="btn" data-challenge="organize">افتح التنظيم</button></div><div class="challenge-card c-lime"><span>🔥</span><h3>استمر 3 أيام</h3><p>أكمل جلسة تركيز واحدة على الأقل كل يوم لمدة 3 أيام.</p><button class="btn" data-challenge="streak">تحقق من التقدم</button></div></div><div class="panel challenge-progress"><div class="duel-banner"><div><span class="duel-kicker">STUDY DUEL · DAILY</span><h3>أنت وصديقك ضد الوقت</h3><p>أول من يصل إلى هدف اليوم يفوز. بعد إكمال الهدف، يرتفع مستوى التحدي غدًا.</p></div><span class="duel-icon">⚡</span></div>
-<div class="panel duel-settings"><h3>هدف المنافسة اليومي</h3><p class="sub">المنافسة على مجموع ساعات المذاكرة الفعلية اليوم، ويزداد الهدف 30 دقيقة بعد الفوز حتى 6 ساعات.</p><div class="duel-target"><strong id="duelTarget">3:00</strong><span id="duelLevel">المستوى 1</span></div><div class="field"><label for="duelFriendName">اسم الصديق (للعرض فقط)</label><input id="duelFriendName" maxlength="24" placeholder="اسم الصديق"></div><p class="sub" id="duelStatus">مزامنة تقدم صديقك الحقيقي تحتاج إلى خادم مشترك وحسابات؛ لن أطلب منك إدخال دقائق صديقك يدويًا وكأنها بيانات حقيقية.</p></div>
-<div class="duel-scoreboard"><div class="duel-player me"><div class="player-top"><span class="player-avatar">🌙</span><span class="player-tag">أنت</span></div><strong id="duelMyTime">0:00</strong><div class="progress"><span id="duelMyBar"></span></div><small id="duelMyPercent">0% من الهدف</small></div><div class="duel-vs">VS</div><div class="duel-player friend"><div class="player-top"><span class="player-avatar">🦊</span><span class="player-tag" id="duelFriendLabel">صديقك</span></div><strong id="duelFriendTime">0:00</strong><div class="progress"><span id="duelFriendBar"></span></div><small id="duelFriendPercent">0% من الهدف</small></div></div><div class="duel-result" id="duelResult" aria-live="polite">ابدأ جلسة تركيز لتدخل المنافسة.</div>
-<div class="panel" id="dailyGoalPanel"><div class="row" style="justify-content:space-between"><h3 style="margin:0">🎯 هدفك اليومي</h3><span id="dailyGoalDate" class="sub" style="margin:0"></span></div><p class="sub">يتجدد تلقائيًا كل يوم، ويُحسب من جلسات التركيز المكتملة.</p><div class="row"><div class="field" style="flex:1;min-width:130px;margin:4px 0"><label for="dailyGoalHours">ساعات الدراسة اليوم</label><input id="dailyGoalHours" type="number" min="0.5" max="16" step="0.5" value="3"></div><button class="btn primary" id="saveDailyGoal" type="button">حفظ الهدف</button></div><div class="row" style="justify-content:space-between"><strong id="dailyGoalProgressText">0 / 3 ساعات</strong><span id="dailyGoalPercent">0%</span></div><div class="progress"><span id="dailyGoalProgressBar"></span></div><p id="dailyGoalMessage" class="sub" style="margin:8px 0 0">ابدأ جلسة تركيز لتتبع تقدمك.</p></div><div class="section-title"><h2>Study Circle</h2></div><section class="study-circle"><h3 style="margin:0">أسبوعك الدراسي</h3><p class="sub" style="margin:3px 0 0">إحصاءات من جلساتك المكتملة ومراجعاتك المسجلة على هذا الجهاز.</p><div class="sc-summary"><div class="sc-stat"><strong id="scMinutes">0</strong><small>دقيقة تركيز</small></div><div class="sc-stat"><strong id="scSessions">0</strong><small>جلسات مكتملة</small></div><div class="sc-stat"><strong id="scReviews">0</strong><small>مراجعات</small></div></div><div id="scWeek" class="sc-week"></div><p id="scMessage" class="sub" style="margin:0">ابدأ أول جلسة، وستظهر بيانات أسبوعك هنا.</p></section>
-<div class="row" style="justify-content:space-between"><h3 style="margin:0">تقدمك اليوم</h3><strong id="challengeDailyCount">0 / 1</strong></div><p id="challengeDailyText" class="sub" style="margin:6px 0 10px">أكمل جلسة تركيز لتسجيل تحدي اليوم.</p><div class="progress"><span id="challengeDailyBar"></span></div><div class="row" style="justify-content:space-between;margin-top:15px"><strong>سلسلة الأيام</strong><strong id="challengeStreak">0 يوم</strong></div><p class="sub" style="margin:4px 0 0">السلسلة تعتمد على جلسة تركيز مكتملة كل يوم، وفق سجل هذا الجهاز.</p></div></section>
+<section id="challenges" class="view">
+<button class="back" data-view="home">← الرئيسية</button>
+<style>
+#challenges .lilo-wrap{max-width:760px;margin:0 auto;padding:8px 0 28px}
+#challenges .lilo-head{text-align:center;padding:22px 18px 18px;border:1px solid #34305c;border-radius:24px;background:radial-gradient(ellipse at top,#27245b 0%,#15162e 55%,#111421 100%);box-shadow:0 16px 40px #05071155}
+#challenges .lilo-kicker{font-size:12px;letter-spacing:2px;color:#a9a6ff;font-weight:800}
+#challenges .lilo-head h2{font-size:27px;margin:9px 0 7px;color:#fff}
+#challenges .lilo-head p{color:#c3c5e4;margin:0;line-height:1.7}
+#challenges .lilo-card{margin-top:15px;padding:19px;border-radius:22px;background:linear-gradient(145deg,#20213f,#171a2c);border:1px solid #34375c}
+#challenges .lilo-target{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#challenges .lilo-target strong{font-size:25px;color:#fff}
+#challenges .lilo-target span{color:#b6b5ff;font-size:13px}
+#challenges .lilo-progress{height:10px;background:#30334c;border-radius:99px;overflow:hidden;margin:13px 0}
+#challenges .lilo-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#7771ff,#51caff);border-radius:99px}
+#challenges .lilo-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:14px}
+#challenges .lilo-stat{padding:12px 8px;border-radius:15px;background:#111526;text-align:center}
+#challenges .lilo-stat strong{display:block;font-size:18px;color:#fff}
+#challenges .lilo-stat small{display:block;color:#aeb3d0;margin-top:4px;font-size:11px}
+#challenges .lilo-people{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-top:16px}
+#challenges .lilo-person{padding:13px 8px;text-align:center;background:#13172a;border:1px solid #333957;border-radius:17px;min-width:0}
+#challenges .lilo-avatar{font-size:25px}
+#challenges .lilo-person b{display:block;margin:5px 0;color:#e9eaff}
+#challenges .lilo-person strong{font-size:19px;color:#fff}
+#challenges .lilo-vs{font-size:12px;font-weight:900;color:#9e9aff}
+#challenges .lilo-btn{width:100%;margin-top:14px}
+#challenges .lilo-note{font-size:12px;line-height:1.7;color:#9fa8c9;margin:10px 0 0}
+@media(max-width:390px){#challenges .lilo-stats{gap:6px}#challenges .lilo-stat{padding:10px 4px}#challenges .lilo-people{gap:6px}}
+</style>
+<div class="lilo-wrap">
+  <div class="lilo-head">
+    <div class="lilo-kicker">NOX STUDY · WEEKLY CHALLENGE</div>
+    <div style="font-size:38px;margin-top:9px">🌙 🏁</div>
+    <h2>سباق الدراسة</h2>
+    <p>25 ساعة تركيز خلال 7 أيام. تقدّم بهدوء، ونافس أصدقاءك خطوة بخطوة.</p>
+  </div>
+  <div class="lilo-card">
+    <div class="lilo-target"><div><div style="color:#b9badb;font-size:13px">هدف الأسبوع</div><strong>25 ساعة</strong></div><span>⏳ 7 أيام</span></div>
+    <div class="lilo-progress"><span id="liloMyBar"></span></div>
+    <div class="lilo-target"><span id="liloMyProgress">0 من 25 ساعة</span><span id="liloMyPercent">0%</span></div>
+    <div class="lilo-stats">
+      <div class="lilo-stat"><strong id="liloDays">0/7</strong><small>أيام نشطة</small></div>
+      <div class="lilo-stat"><strong id="liloHours">0 س</strong><small>وقت التركيز</small></div>
+      <div class="lilo-stat"><strong>🏆</strong><small>وسام الإنجاز</small></div>
+    </div>
+    <div class="lilo-people">
+      <div class="lilo-person"><div class="lilo-avatar">🌙</div><b>أنت</b><strong id="liloSelfTime">0 س</strong></div>
+      <div class="lilo-vs">VS</div>
+      <div class="lilo-person"><div class="lilo-avatar">🦊</div><b>صديقك</b><strong id="liloFriendTime">—</strong></div>
+    </div>
+    <p class="lilo-note" id="liloChallengeStatus">يُحسب تقدمك من جلسات التركيز المكتملة على هذا الجهاز. سجّل الدخول لمزامنة تقدم الأصدقاء.</p>
+    <button class="btn primary lilo-btn" data-view="friends" type="button">🤝 إضافة صديق</button>
+    <button class="btn lilo-btn" data-view="focus" type="button">ابدأ جلسة تركيز</button>
+  </div>
+</div>
+<div id="legacyChallengeCompatibility" hidden>
+<div id="duelTarget"></div><div id="duelLevel"></div><div id="duelFriendName"></div><div id="duelStatus"></div><div id="duelMyTime"></div><div id="duelMyBar"></div><div id="duelMyPercent"></div><div id="duelFriendLabel"></div><div id="duelFriendTime"></div><div id="duelFriendBar"></div><div id="duelFriendPercent"></div><div id="duelResult"></div><div id="dailyGoalPanel"></div><div id="dailyGoalDate"></div><div id="dailyGoalHours"></div><div id="dailyGoalProgressText"></div><div id="dailyGoalPercent"></div><div id="dailyGoalProgressBar"></div><div id="dailyGoalMessage"></div><div id="scMinutes"></div><div id="scSessions"></div><div id="scReviews"></div><div id="scWeek"></div><div id="scMessage"></div><div id="challengeDailyCount"></div><div id="challengeDailyText"></div><div id="challengeDailyBar"></div><div id="challengeStreak"></div>
+</div>
+</section>
 <section id="friends" class="view"><button class="back" data-view="home">← الرئيسية</button><div class="friends-hero"><span>🤝</span><h2>الأصدقاء والمنافسة</h2><p>سجّل الدخول، شارك رمزك، وتابع دقائق الدراسة الحقيقية مع أصدقائك.</p></div>
 <div class="panel" id="noxAuthPanel"><h3>حساب NOX STUDY</h3><p class="sub">استخدم بريدك الإلكتروني وكلمة مرور. لن تُرسل كلمة المرور إلى أي مكان غير Supabase Auth.</p><div class="field"><label for="noxDisplayName">اسم العرض (للتسجيل)</label><input id="noxDisplayName" type="text" autocomplete="nickname" placeholder="الاسم الذي يراه أصدقاؤك"></div><div class="field"><label for="noxEmail">البريد الإلكتروني</label><input id="noxEmail" type="email" autocomplete="email" placeholder="you@example.com"></div><div class="field"><label for="noxPassword">كلمة المرور</label><input id="noxPassword" type="password" autocomplete="current-password" minlength="6" placeholder="6 أحرف على الأقل"></div><div class="row"><button class="btn primary" id="noxSignIn">تسجيل الدخول</button><button class="btn" id="noxSignUp">إنشاء حساب</button><button class="btn" id="noxSignOut" style="display:none">تسجيل الخروج</button></div><p id="noxAuthStatus" class="sub" aria-live="polite" style="margin:10px 0 0">سجّل الدخول أو أنشئ حسابًا للبدء.</p></div>
 <div id="noxSocialPanel" style="display:none"><div class="panel"><h3>رمزك الشخصي</h3><p class="sub">شارك هذا الرمز مع صديقك ليتمكن من إرسال طلب صداقة إليك.</p><div class="friend-code-row"><code id="myFriendCode">NOX-••••••</code><button class="btn primary" id="copyFriendCode">نسخ الرمز</button></div><p id="friendCodeStatus" class="sub" aria-live="polite" style="margin:8px 0 0"></p></div>
