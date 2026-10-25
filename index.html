@@ -45,25 +45,33 @@ h1{font-size:clamp(25px,5vw,32px)}h2{font-size:clamp(21px,4.5vw,27px)}h3{font-si
 @media(max-width:420px){.challenge-grid{gap:8px}.challenge-card{padding:12px;min-height:205px}.challenge-card p{font-size:12px}.friend-code-row code{font-size:18px}}
 .duel-banner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px;border-radius:22px;color:#fff;background:radial-gradient(circle at 10% 0,#ffcf66,transparent 32%),linear-gradient(120deg,#5c35d5,#c63fe2 58%,#ff638b);margin:12px 0}.duel-banner h3{color:#fff;margin:6px 0}.duel-banner p{margin:0;color:#fff;opacity:.94}.duel-kicker{font-size:11px;font-weight:900;letter-spacing:1.5px}.duel-icon{font-size:45px}.duel-target{display:flex;align-items:center;justify-content:space-between;padding:14px;border-radius:16px;background:linear-gradient(120deg,#efe5ff,#ffe3f0,#dcfaff);color:#4b2fb1;margin-bottom:12px}.duel-target strong{font-size:34px}.duel-target span{font-weight:800}.duel-scoreboard{display:grid;grid-template-columns:minmax(0,1fr) 38px minmax(0,1fr);gap:8px;align-items:center;margin:12px 0}.duel-player{padding:14px 10px;border-radius:18px;min-width:0;box-shadow:0 9px 22px #31235a12}.duel-player.me{background:linear-gradient(145deg,#e8e1ff,#c5b4ff);color:#3e257f}.duel-player.friend{background:linear-gradient(145deg,#d7fbff,#a1eaf1);color:#075a71}.player-top{display:flex;align-items:center;gap:6px}.player-avatar{font-size:24px}.player-tag{font-size:12px;font-weight:850;overflow:hidden;text-overflow:ellipsis}.duel-player>strong{display:block;font-size:24px;margin:12px 0}.duel-player .progress{background:#ffffffa6;height:8px}.duel-player .progress span{background:linear-gradient(90deg,#ffb545,#ff4e9c,#7048f4)}.duel-player small{display:block;margin-top:7px;font-size:11px}.duel-vs{border-radius:50%;background:linear-gradient(145deg,#ffcf63,#ff6c96);color:#542252;font-size:12px;font-weight:950;width:36px;height:36px;display:grid;place-items:center}.duel-result{padding:14px;border-radius:15px;background:linear-gradient(100deg,#fff0c9,#ffe1ed,#e9e1ff);border:1px solid #e5b5ed;color:#572b86;text-align:center;font-weight:800;margin-bottom:12px}.review-source,.flashcard{background:radial-gradient(circle at 100% 0,#ffd9ed,transparent 35%),radial-gradient(circle at 0 100%,#c7f7ff,transparent 35%),linear-gradient(145deg,#fff,#f0eaff)!important;border:2px solid #b8a2ff!important;box-shadow:0 12px 28px #7044d92b}.flashcard .q{color:#4c2cb7}.flashcard .a{background:linear-gradient(135deg,#fff4fb,#edfaff);border-color:#d8caff}@media(max-width:390px){.duel-player{padding:10px 7px}.duel-player>strong{font-size:20px}.duel-scoreboard{gap:5px;grid-template-columns:minmax(0,1fr) 32px minmax(0,1fr)}.duel-vs{width:30px;height:30px}}
 
-/* Dark-mode readability: keep typed text, placeholders and form controls high-contrast. */
-body[data-theme="dark"] input,
+/* Dark mode: readable text in every editable field, including Free Notes and PDF notes. */
+body[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="color"]),
 body[data-theme="dark"] textarea,
-body[data-theme="dark"] select{
-  background:#101827!important;color:#f5f7ff!important;border-color:#52617a!important;
-  caret-color:#a9a2ff!important;color-scheme:dark;
+body[data-theme="dark"] select,
+body[data-theme="dark"] .pomodoro-fields input,
+body[data-theme="dark"] .review-source input,
+body[data-theme="dark"] .review-source textarea,
+body[data-theme="dark"] .mini-memo textarea{
+  background:#101827!important;
+  color:#f5f7ff!important;
+  border-color:#52617a!important;
+  caret-color:#b9b2ff!important;
+  -webkit-text-fill-color:#f5f7ff!important;
+  color-scheme:dark;
 }
 body[data-theme="dark"] input::placeholder,
-body[data-theme="dark"] textarea::placeholder{color:#aebbd0!important;opacity:1}
-body[data-theme="dark"] label,
-body[data-theme="dark"] .field label{color:#e6ebf7!important}
+body[data-theme="dark"] textarea::placeholder{
+  color:#b7c2d8!important;opacity:1!important;
+  -webkit-text-fill-color:#b7c2d8!important;
+}
+body[data-theme="dark"] .field label,
+body[data-theme="dark"] label{color:#e0e7f5}
 body[data-theme="dark"] .sub,
 body[data-theme="dark"] .empty,
-body[data-theme="dark"] .panel p{color:#c2cce0}
-body[data-theme="dark"] .item,
-body[data-theme="dark"] .notes-list,
-body[data-theme="dark"] .panel{color:#eef3ff}
+body[data-theme="dark"] .item small{color:#c2cce0}
 body[data-theme="dark"] option{background:#101827;color:#f5f7ff}
-
+body[data-theme="dark"] .pomodoro-settings{color:#f0f2ff}
 </style></head><body>
 <div class="shell">
 <header class="top"><div class="brand"><div class="logo">N</div><div><h1>NOX STUDY 📚</h1><p>مكان واحد للتنظيم والتركيز والتعلّم</p></div></div><button class="iconbtn" id="themeBtn" aria-label="تبديل المظهر">◐</button></header>
