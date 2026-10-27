@@ -435,14 +435,20 @@ function openQuoteGate(){focusQuoteCursor=(focusQuoteCursor+1)%focusQuotes.lengt
 function closeQuoteGate(){if(!quoteGate.classList.contains("open"))return;quoteGate.classList.remove("open");quoteGate.setAttribute("aria-hidden","true");if(typeof focusStartHandler==="function")focusStartHandler()}
 $("#startFocus").onclick=()=>{if(running){if(typeof focusStartHandler==="function")focusStartHandler();return}openQuoteGate()};quoteGate.addEventListener("click",closeQuoteGate);quoteGate.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();closeQuoteGate()}});
 
-renderTasks();renderPages();renderCards();renderNotes();renderAchievements();renderStudyCircle();goalPaint();renderChallenges();renderIndividualChallenge();renderFriends();paintDuel();paintDailyGoal();noxLoadSession();
-
-/* Resilient startup: one optional panel failing must not disable the rest of the app. */
+/* Initialize account session first; a broken optional panel must never block login. */
+try{Promise.resolve(noxLoadSession()).catch(e=>{console.error("Account session startup:",e);noxAuthMessage("تعذر تحميل جلسة الحساب. أعد تحميل الصفحة وتحقق من الاتصال.")})}catch(e){console.error("Account session startup:",e);noxAuthMessage("تعذر تحميل جلسة الحساب. أعد تحميل الصفحة وتحقق من الاتصال.")}
+try{renderTasks()}catch(e){console.error("Tasks startup:",e)}
+try{renderPages()}catch(e){console.error("Pages startup:",e)}
+try{renderCards()}catch(e){console.error("Cards startup:",e)}
+try{renderNotes()}catch(e){console.error("Free Notes startup:",e)}
+try{renderAchievements()}catch(e){console.error("Achievements startup:",e)}
+try{renderStudyCircle()}catch(e){console.error("Study summary startup:",e)}
 try{forestPaint()}catch(e){console.error("Forest startup:",e)}
 try{timerPaint()}catch(e){console.error("Timer startup:",e)}
 try{goalPaint()}catch(e){console.error("Goal startup:",e)}
-try{renderStudyCircle()}catch(e){console.error("Study summary startup:",e)}
-try{paintDailyGoal()}catch(e){console.error("Daily goal startup:",e)}
 try{renderChallenges()}catch(e){console.error("Challenge startup:",e)}
-try{renderNotes()}catch(e){console.error("Free Notes startup:",e)}
+try{renderIndividualChallenge()}catch(e){console.error("Individual challenge startup:",e)}
+try{renderFriends()}catch(e){console.error("Friends startup:",e)}
+try{paintDuel()}catch(e){console.error("Duel startup:",e)}
+try{paintDailyGoal()}catch(e){console.error("Daily goal startup:",e)}
 </script></body></html>
