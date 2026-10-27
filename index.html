@@ -302,6 +302,19 @@ body[data-theme="dark"] .muted {color:#c5d0e4!important}
 </div>
 <nav class="bottomnav"><button class="active" data-view="home">⌂ الرئيسية</button><button data-view="organize">▤ تنظيم</button><button data-view="focus">🌱 تركيز</button><button data-view="cards">🧠 مراجعة</button><button data-view="challenges">🏆 تحديات</button></nav>
 <div id="quoteGate" class="quote-gate" role="button" tabindex="0" aria-label="اضغط في أي مكان لبدء جلسة التركيز" aria-hidden="true"><div class="quote-inner"><div class="quote-mark">✦</div><h2 id="quoteGateText">﴿ وَقُلْ رَبِّ زِدْنِي عِلْمًا ﴾</h2><p>استعن بالله، وابدأ بخطوة صغيرة.</p><p>اضغط في أي مكان للمتابعة</p></div></div><div class="pdf-viewer" id="pdfViewer"><div class="pdf-head"><button class="btn" id="closePdf">✕</button><strong id="pdfTitle">ملف PDF</strong><button class="btn" id="pdfSaveInk">تصدير العلامات</button><button class="btn" id="pdfImportInk">استيراد العلامات</button><input type="file" id="pdfInkInput" accept="application/json,.json" hidden><button class="btn" id="pdfExternal">فتح خارجي</button></div><button class="memo-edge" id="memoToggle" aria-expanded="false" title="المذكرة">✎</button><div class="mini-memo" id="pdfMemo"><strong>مذكرة PDF</strong><textarea id="pdfMemoText" placeholder="دوّن فكرة أو ملاحظة سريعة..."></textarea><div class="row"><small id="pdfMemoStatus">يُحفظ تلقائيًا على هذا الجهاز</small><button class="btn" id="pdfMemoClose">إغلاق</button></div></div><div class="pdf-tools"><button id="pdfScroll">قراءة / تمرير</button><button class="active" id="pdfPen">✎ قلم</button><button id="pdfHighlight">🖍 تظليل</button><button id="pdfText">T نص</button><button id="pdfErase">⌫ ممحاة</button><button id="pdfClear">مسح العلامات</button><label>اللون <input id="pdfColor" type="color" value="#245bd7"></label><label>السُمك <input id="pdfWidth" type="range" min="1" max="18" value="3"></label></div><div class="pdf-stage" id="pdfStage"><div id="pdfPages" class="pdf-pages"><p class="pdf-placeholder">اختر ملف PDF لعرضه هنا.</p></div></div><div class="pdf-foot">التعليقات محفوظة كطبقة مستقلة فوق الصفحات. إذا تعذّر العرض، استخدم «فتح خارجي».</div></div>
+<script>
+/* Independent navigation fallback for section buttons. */
+document.addEventListener("click",function(event){
+  const button=event.target.closest("[data-view]");
+  if(!button)return;
+  const id=button.getAttribute("data-view");
+  const target=document.getElementById(id);
+  if(!target||!target.classList.contains("view"))return;
+  document.querySelectorAll(".view").forEach(function(section){section.classList.toggle("active",section===target)});
+  document.querySelectorAll(".bottomnav [data-view]").forEach(function(nav){nav.classList.toggle("active",nav===button)});
+  window.scrollTo(0,0);
+},true);
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
