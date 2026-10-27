@@ -91,6 +91,7 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;back
 @media(max-width:560px){.pdf-reader-overlay{padding:7px!important;gap:6px}.pdf-reader-overlay .panel-head{padding:8px}.pdf-tools{gap:5px}.pdf-tools button{padding:8px;font-size:13px}.pdf-reader-overlay>.notice{font-size:10px}.pdf-notes-panel{flex-basis:38%}}
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <div class="app">
@@ -124,6 +125,24 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;back
 </div>
 <script>
 const $=s=>document.querySelector(s);
+const authClient=window.supabase.createClient("https://ohuffzugxmaewdeyckgc.supabase.co","sb_publishable_m-xcNtE-wIr1HrrN86R3vQ_7MDqC_Mk",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+async function refreshAccountPanel(message=""){
+ const status=$("#accountStatus"),current=$("#accountCurrent"),signIn=$("#accountSignIn"),signUp=$("#accountSignUp"),signOut=$("#accountSignOut");
+ if(!status)return;
+ const {data,error}=await authClient.auth.getSession();
+ if(error){status.textContent="تعذر التحقق من الجلسة: "+error.message;return}
+ const user=data.session?.user;
+ if(user){
+  status.textContent=message||"تم حفظ تسجيل الدخول على هذا الجهاز.";
+  current.textContent="الحساب الحالي: "+(user.email||"حساب مسجل");
+  signIn.classList.add("hidden");signUp.classList.add("hidden");signOut.classList.remove("hidden");
+  $("#accountEmail").value=user.email||"";$("#accountPassword").value="";
+ }else{
+  status.textContent=message||"لم تسجّل الدخول بعد.";
+  current.textContent="سجّل الدخول مرة واحدة، وسيبقى حسابك محفوظًا في هذا المتصفح.";
+  signIn.classList.remove("hidden");signUp.classList.remove("hidden");signOut.classList.add("hidden");
+ }
+}
 const days=[["الإثنين","إث"],["الثلاثاء","ثل"],["الأربعاء","أر"],["الخميس","خم"],["الجمعة","جم"],["السبت","سب"],["الأحد","أح"]];
 const navStack=[];const state={theme:localStorage.getItem("noxTheme")||"light",tasks:JSON.parse(localStorage.getItem("noxTasks")||"[]"),sessions:Number(localStorage.getItem("noxSessions")||0),timetable:JSON.parse(localStorage.getItem("noxTimetable")||"{}")};
 document.documentElement.dataset.theme=state.theme==="dark"?"dark":"light";
@@ -153,12 +172,38 @@ tasks:`${back}<section class="panel"><h2>مهامي</h2><p class="sub">قسّم 
  wellbeing:`${back}<section class="panel"><h2>التركيز ووقت الشاشة</h2><p class="sub">إدارة جلسات الدراسة وأهداف الاستخدام من مكان واحد.</p><div class="panel-head"><h3>جلسة التركيز</h3><span class="pill">مؤقت دراسة</span></div><div class="field"><label>المادة (اختياري)</label><input id="focusSubject" placeholder="مثل: الرياضيات"></div><div class="field"><label>مدة الجلسة بالدقائق</label><select id="duration"><option value="25">25 دقيقة</option><option value="15">15 دقيقة</option><option value="30">30 دقيقة</option><option value="45">45 دقيقة</option><option value="60">60 دقيقة</option></select></div><div class="forest-card" style="text-align:center;background:linear-gradient(145deg,#e9f7ed,#f4f8ff);border:1px solid #d8e9df;border-radius:16px;padding:14px;margin:12px 0;color:#254b38"><div id="forestTree" style="font-size:42px;line-height:1.2">🌱</div><strong id="forestTitle">ازرع شجرتك الأولى</strong><p id="forestHint" style="font-size:12px;margin:4px 0">كلما ركّزت، كبرت شجرتك. أكمل الجلسة لتضيفها إلى غابتك.</p><div id="forestCount" style="font-size:12px">🌳 0 شجرة مكتملة</div></div><div class="timer" id="timer">25:00</div><div class="actions" style="justify-content:center"><button class="action" id="startTimer">ابدأ</button><button class="action secondary" id="resetTimer">إعادة ضبط</button></div><p class="notice">المؤقت يعمل داخل التطبيق؛ حظر التطبيقات فعليًا يحتاج تكامل Android وصلاحيات خاصة.</p><div style="height:1px;background:var(--line);margin:20px 0"></div><div class="panel-head"><h3>أهداف وقت الشاشة</h3><span class="pill">أهداف يدوية</span></div><div class="field"><label>اختر التطبيق</label><select id="appName"><option value="">اختر تطبيقًا</option><option>YouTube</option><option>TikTok</option><option>Instagram</option><option>Facebook</option><option>WhatsApp</option><option>الألعاب</option><option>تطبيق آخر</option></select></div><div class="field"><label>الحد اليومي: <b id="limitLabel">60 دقيقة</b></label><input id="appLimit" type="range" min="5" max="240" step="5" value="60"><div style="display:flex;justify-content:space-between;color:var(--muted);font-size:11px"><span>5 دقائق</span><span>4 ساعات</span></div><input id="appLimitNumber" type="number" min="5" max="240" value="60" style="margin-top:8px"></div><button class="action" id="addLimit">حفظ الهدف على هذا الجهاز</button><div id="limitsList"></div><p class="notice">هذه أهداف يدوية وليست قراءة فعلية لاستخدام التطبيقات الأخرى؛ ذلك يحتاج تكامل Android.</p></section>`,
 
  timetable:`${back}<section class="panel"><h2>الجدول الدراسي</h2><p class="sub">من الإثنين إلى السبت. اضغط أي خانة لإضافة مادة أو تعديلها.</p><div style="overflow-x:auto"><table id="ttGrid" style="border-collapse:collapse;min-width:720px;width:100%;font-size:12px"></table></div><p class="notice">الفترات: 08–09، 09–10، 10–11، 11–12، 14–15، 15–16، 16–17، 17–18.</p></section>`,
- settings:`${back}<section class="panel"><h2>الإعدادات</h2><p class="sub">إعدادات أساسية فقط، دون قوائم معقدة.</p><div class="field"><label>المظهر</label><select id="themeSelect"><option value="light">فاتح — كريمي</option><option value="dark">داكن</option></select></div><div class="field"><label>لغة الواجهة</label><select id="langSelect"><option value="ar">العربية</option><option value="fr">Français (قريبًا)</option><option value="en">English (قريبًا)</option></select></div><button class="action" id="saveSettings">حفظ الإعدادات</button><div class="notice">الحساب والمزامنة والنسخ الاحتياطي لم تُفعّل بعد؛ لن نعرضها كأنها تعمل قبل بناء الخادم.</div></section>`
+ settings:`${back}<section class="panel"><h2>الإعدادات</h2><p class="sub">إعدادات أساسية فقط، دون قوائم معقدة.</p><div class="field"><label>المظهر</label><select id="themeSelect"><option value="light">فاتح — كريمي</option><option value="dark">داكن</option></select></div><div class="field"><label>لغة الواجهة</label><select id="langSelect"><option value="ar">العربية</option><option value="fr">Français (قريبًا)</option><option value="en">English (قريبًا)</option></select></div><button class="action" id="saveSettings">حفظ الإعدادات</button></section><section class="panel"><h2>حسابك</h2><p class="sub">سجّل الدخول مرة واحدة، وسيحاول NOX STUDY تذكّر جلستك على هذا المتصفح.</p><div id="accountStatus" class="notice">جارٍ التحقق من الحساب…</div><p id="accountCurrent" class="sub"></p><div class="field"><label for="accountEmail">البريد الإلكتروني</label><input id="accountEmail" type="email" autocomplete="username" placeholder="البريد الإلكتروني"></div><div class="field"><label for="accountPassword">كلمة المرور</label><input id="accountPassword" type="password" autocomplete="current-password" placeholder="كلمة المرور"></div><div class="actions"><button class="action" id="accountSignIn">تسجيل الدخول</button><button class="action secondary" id="accountSignUp">إنشاء حساب</button><button class="action secondary hidden" id="accountSignOut">تسجيل الخروج</button></div><p class="notice">تسجيل الدخول يبقى محفوظًا في هذا المتصفح ما لم تسجّل الخروج أو تمسح بيانات الموقع. ملفاتك وملاحظاتك الحالية ما زالت محفوظة محليًا على هذا الجهاز وليست متزامنة بين الأجهزة.</p></section>`
  };
  v.innerHTML=views[id]||`${back}<section class="panel"><h2>${id}</h2><p class="sub">قيد الإعداد.</p></section>`;
  if(id==="notebook"){initNotebook();}
  if(id==="tasks"){renderTasks();$("#addTask").onclick=()=>{const text=$("#taskText").value.trim(),due=$("#taskDue").value;if(!text)return;state.tasks.push({id:Date.now(),text,due,done:false});save();renderTasks();renderWeek();$("#taskText").value="";$("#taskDue").value=""};}
- if(id==="settings"){ $("#themeSelect").value=state.theme; $("#saveSettings").onclick=()=>{state.theme=$("#themeSelect").value;localStorage.setItem("noxTheme",state.theme);document.documentElement.dataset.theme=state.theme==="dark"?"dark":"light";openView("settings")};}
+ if(id==="settings"){
+ $("#themeSelect").value=state.theme;
+ $("#saveSettings").onclick=()=>{state.theme=$("#themeSelect").value;localStorage.setItem("noxTheme",state.theme);document.documentElement.dataset.theme=state.theme==="dark"?"dark":"light";openView("settings")};
+ $("#accountSignIn").onclick=async()=>{
+  const email=$("#accountEmail").value.trim(),password=$("#accountPassword").value;
+  if(!email||!password){$("#accountStatus").textContent="أدخل البريد الإلكتروني وكلمة المرور أولًا.";return}
+  $("#accountStatus").textContent="جارٍ تسجيل الدخول…";
+  const {error}=await authClient.auth.signInWithPassword({email,password});
+  if(error){$("#accountStatus").textContent="تعذر تسجيل الدخول: "+error.message;return}
+  await refreshAccountPanel("تم تسجيل الدخول، وسيبقى محفوظًا على هذا الجهاز.");
+ };
+ $("#accountSignUp").onclick=async()=>{
+  const email=$("#accountEmail").value.trim(),password=$("#accountPassword").value;
+  if(!email||password.length<6){$("#accountStatus").textContent="أدخل بريدًا إلكترونيًا وكلمة مرور من 6 أحرف على الأقل.";return}
+  $("#accountStatus").textContent="جارٍ إنشاء الحساب…";
+  const {data,error}=await authClient.auth.signUp({email,password});
+  if(error){$("#accountStatus").textContent="تعذر إنشاء الحساب: "+error.message;return}
+  if(data.session){await refreshAccountPanel("تم إنشاء الحساب وتسجيل الدخول.");}
+  else{$("#accountStatus").textContent="تم إرسال رسالة تأكيد إلى بريدك الإلكتروني. أكّد البريد ثم سجّل الدخول.";}
+ };
+ $("#accountSignOut").onclick=async()=>{
+  const {error}=await authClient.auth.signOut();
+  if(error){$("#accountStatus").textContent="تعذر تسجيل الخروج: "+error.message;return}
+  await refreshAccountPanel("تم تسجيل الخروج من هذا الجهاز.");
+ };
+ refreshAccountPanel();
+}
  if(id==="folders"){renderFolders();$("#createFile").onclick=()=>{$("#fileForm").classList.remove("hidden");$("#folderStart").classList.add("hidden")};$("#cancelFile").onclick=()=>{$("#fileForm").classList.add("hidden");$("#folderStart").classList.remove("hidden")};$("#addFolder").onclick=async()=>{let n=$("#folderName").value.trim(),f=$("#pickedFile").files[0];if(!n||!f){alert("اكتب اسم الملف واختر الملف من الهاتف.");return}try{const id="f"+Date.now();await putStoredFile({id,name:n,fileName:f.name,size:f.size,type:f.type,blob:f});let a=JSON.parse(localStorage.getItem("noxFolders")||"[]");a.push({id,name:n,fileName:f.name,size:f.size});localStorage.setItem("noxFolders",JSON.stringify(a));$("#folderName").value="";$("#pickedFile").value="";renderFolders();$("#fileForm").classList.add("hidden");$("#folderStart").classList.remove("hidden")}catch(e){alert("تعذر حفظ الملف في المتصفح. جرّب ملفًا أصغر أو افتح الموقع في Chrome.")}};$("#togglePdfNotes").onclick=()=>{const open=$("#pdfNotesPanel").classList.toggle("open");$("#pdfReader").classList.toggle("notes-open",open);if(open)$("#pdfNotesText").focus()};$("#pdfNotesText").oninput=()=>{if(window.noxCurrentFileId){try{localStorage.setItem("noxPdfNote:"+window.noxCurrentFileId,$("#pdfNotesText").value);$("#pdfNotesSaved").textContent="تم الحفظ تلقائيًا"}catch{$("#pdfNotesSaved").textContent="تعذر الحفظ: مساحة التخزين ممتلئة"}}};$("#closePdf").onclick=()=>{if(window.noxPdfUrl)URL.revokeObjectURL(window.noxPdfUrl);window.noxPdfUrl=null;$("#pdfFrame").src="about:blank";$("#pdfReader").classList.add("hidden");$("#pdfInk").classList.remove("active");window.noxCurrentFileId=null};}
  if(id==="cards"){renderCards();$("#addCard").onclick=()=>{let q=$("#cardQ").value.trim(),a=$("#cardA").value.trim();if(!q||!a)return;let cs=JSON.parse(localStorage.getItem("noxCards")||"[]");cs.push({q,a});localStorage.setItem("noxCards",JSON.stringify(cs));$("#cardQ").value="";$("#cardA").value="";renderCards()};}
  if(id==="tutor")$("#tutorDemo").onclick=()=>$("#tutorNote").classList.remove("hidden");
