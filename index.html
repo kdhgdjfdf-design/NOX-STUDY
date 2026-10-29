@@ -335,7 +335,7 @@ $("#goalCountry").value=activeGoal.country||"";
 if(!goalDefaults[activeGoal.type])activeGoal.type="cake";
 activeGoal.hours=goalDefaults[activeGoal.type].hours;
 put("activeGoal",activeGoal);
-let tick=null,remain=1500,total=1500,running=false,phase="focus",cycleNumber=1,deadline=0,completedCycles=0,focusMode="duration";
+let tick=null,remain=1500,total=1500,running=false,phase="focus",cycleNumber=1,deadline=0,completedCycles=0,focusMode="duration";let rewardLastTick=0;
 const quotes=["ابدأ بخطوة صغيرة، فالاستمرار يصنع الفرق.","ليس مطلوبًا أن تكون مثاليًا؛ فقط واصل.","كل دقيقة تركيز استثمار في نفسك.","تعبك اليوم يسهّل عليك الغد.","قسّم الصعب إلى خطوات، ثم ابدأ بالأولى.","أنت تتقدم حتى لو كان التقدم بطيئًا.","أبعد المشتتات، وأعطِ هدفك فرصة.","جلسة واحدة أفضل من انتظار الحماس."];let quoteIndex=0;function rotateQuote(){quoteIndex=(quoteIndex+1)%quotes.length;$("#focusQuote").textContent=quotes[quoteIndex];$("#homeQuote").textContent=quotes[quoteIndex]}setInterval(rotateQuote,25000);
 function focusDuration(){if(focusMode==="pomodoro")return 25*60;const h=Math.max(0,Math.min(168,Math.floor(Number($("#focusHours").value)||0))),m=Math.max(0,Math.min(59,Math.floor(Number($("#focusMinutes").value)||0)));return h*3600+m*60}
 function formatClock(sec){sec=Math.max(0,Math.floor(sec));const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),ss=sec%60;return h>0?String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(ss).padStart(2,"0"):String(m).padStart(2,"0")+":"+String(ss).padStart(2,"0")}
@@ -453,9 +453,8 @@ const focusStartHandler=$("#startFocus").onclick,quoteGate=$("#quoteGate");
 const focusQuotes=["﴿ وَقُلْ رَبِّ زِدْنِي عِلْمًا ﴾","﴿ وَأَنْ لَيْسَ لِلْإِنْسَانِ إِلَّا مَا سَعَى ﴾","وما توفيقي إلا بالله عليه توكلت وإليه أنيب","استعن بالله ولا تعجز"];
 let focusQuoteCursor=-1;
 function openQuoteGate(){focusQuoteCursor=(focusQuoteCursor+1)%focusQuotes.length;$("#quoteGateText").textContent=focusQuotes[focusQuoteCursor];quoteGate.classList.add("open");quoteGate.setAttribute("aria-hidden","false")}
-function closeQuoteGate(){if(!quoteGate.classList.contains("open"))return;quoteGate.classList.remove("open");quoteGate.setAttribute("aria-hidden","true");if(typeof focusStartHandler==="function")focusStartHandler()}
+function closeQuoteGate(){if(!quoteGate.classList.contains("open"))return;quoteGate.classList.remove("open");quoteGate.setAttribute("aria-hidden","true");if(typeof focusStartHandler==="function")focusStartHandler();else toggleTimer()}
 $("#startFocus").onclick=()=>{if(running){if(typeof focusStartHandler==="function")focusStartHandler();return}openQuoteGate()};quoteGate.addEventListener("click",closeQuoteGate);quoteGate.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();closeQuoteGate()}});
-let rewardLastTick=0;
 function rewardEarnedPoints(){return Math.floor(Math.max(0,Number(localStorage.getItem("ss:rewardFocusMs")||0))/180000)}
 function rewardSpentPoints(){return Math.max(0,Number(localStorage.getItem("ss:rewardSpentPoints")||0))}
 function rewardAvailablePoints(){return Math.max(0,rewardEarnedPoints()-rewardSpentPoints())}
