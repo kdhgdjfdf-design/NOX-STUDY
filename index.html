@@ -67,6 +67,23 @@ h1{font-size:clamp(25px,5vw,32px)}h2{font-size:clamp(21px,4.5vw,27px)}h3{font-si
 .pdf-foot{flex:0 0 auto;padding:5px;background:#101321;color:#aeb2ca}
 @keyframes quoteRise{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 \n.study-circle{padding:17px;background:linear-gradient(145deg,#fff,#f0edff);border:1px solid #ded8ff;border-radius:18px;margin:12px 0}.sc-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.sc-stat{padding:11px 5px;border-radius:13px;background:#fff;border:1px solid #e5ddff;text-align:center}.sc-stat strong{display:block;font-size:20px;color:#5143bd}.sc-stat small{font-size:11px;color:var(--muted)}.sc-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;align-items:end;margin:16px 0 8px;min-height:115px}.sc-day{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}.sc-bar-wrap{height:76px;width:100%;display:flex;align-items:flex-end;justify-content:center;background:#e9e5ff;border-radius:8px;overflow:hidden}.sc-bar{width:100%;max-width:26px;border-radius:7px 7px 2px 2px;background:linear-gradient(180deg,#a18cff,#6558d9);min-height:0}.sc-day small{font-size:10px;color:var(--muted)}.sc-day b{font-size:10px;font-weight:650}@media(max-width:420px){.sc-summary{gap:5px}.sc-stat{padding:9px 2px}.sc-stat strong{font-size:18px}}\n
+
+/* Cleaner challenge controls and form fields */
+#challenges .challenge-grid{gap:14px;align-items:stretch}
+#challenges .challenge-card{min-height:190px;padding:18px;border-radius:20px;gap:5px;box-shadow:0 8px 20px #46388c10;transition:transform .18s ease,box-shadow .18s ease}
+#challenges .challenge-card:active{transform:scale(.985)}
+#challenges .challenge-card .btn{width:100%;text-align:center;margin-top:10px;border-radius:12px;padding:10px 12px}
+#challenges .individual-settings{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}
+#challenges .individual-settings .field{min-width:0;margin:8px 0 14px}
+#challenges .individual-settings input,#challenges .individual-settings select{min-height:48px;border-radius:13px;border:1px solid #dcd7ef;background:#fff;padding:11px 13px;box-shadow:inset 0 1px 2px #25204408}
+#challenges #saveIndividualChallenge{width:100%;min-height:48px;border-radius:14px;margin-top:3px;font-weight:750}
+#challenges .back{display:inline-flex;align-items:center;gap:6px;padding:9px 12px;margin:0 0 12px;border:1px solid var(--line);border-radius:12px;background:#fff}
+#challenges .lilo-kicker-inside{display:inline-flex;width:max-content;max-width:100%;padding:6px 10px;margin:0 0 14px;border:1px solid #7771ff55;border-radius:999px;background:#29264d;color:#c9c6ff;font-size:10px;letter-spacing:1.2px}
+#challenges .lilo-card{padding:18px}
+#challenges .lilo-btn{min-height:46px;border-radius:13px;font-weight:700}
+#challenges .lilo-btn+.lilo-btn{margin-top:8px}
+@media(max-width:390px){#challenges .individual-settings{grid-template-columns:1fr;gap:0}#challenges .challenge-card{padding:14px;min-height:180px}}
+
 /* Saturated but readable challenge, friend and review visuals */
 .challenge-hero,.friends-hero{padding:23px;border-radius:22px;color:white;margin-bottom:14px;overflow:hidden}
 .challenge-hero{background:radial-gradient(circle at 12% 15%,#ffd36c 0,transparent 28%),linear-gradient(120deg,#673de6,#b93ee7 55%,#ff6387)}
@@ -285,12 +302,13 @@ body[data-theme="dark"] .muted {color:#c5d0e4!important}
 </style>
 </div><div class="lilo-wrap">
   <div class="lilo-head">
-    <div class="lilo-kicker">NOX STUDY · WEEKLY CHALLENGE</div>
+    
     <div style="font-size:38px;margin-top:9px">🌙 🏁</div>
     <h2>سباق الدراسة</h2>
     <p>25 ساعة تركيز خلال 7 أيام. تقدّم بهدوء، ونافس أصدقاءك خطوة بخطوة.</p>
   </div>
   <div class="lilo-card">
+    <div class="lilo-kicker lilo-kicker-inside">NOX STUDY · WEEKLY CHALLENGE</div>
     <div class="lilo-target"><div><div style="color:#b9badb;font-size:13px">هدف الأسبوع</div><strong>25 ساعة</strong></div><span>⏳ 7 أيام</span></div>
     <div class="lilo-progress"><span id="liloMyBar"></span></div>
     <div class="lilo-target"><span id="liloMyProgress">0 من 25 ساعة</span><span id="liloMyPercent">0%</span></div>
