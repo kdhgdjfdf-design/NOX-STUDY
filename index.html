@@ -485,7 +485,6 @@ let focusQuoteCursor=-1;
 function openQuoteGate(){focusQuoteCursor=(focusQuoteCursor+1)%focusQuotes.length;$("#quoteGateText").textContent=focusQuotes[focusQuoteCursor];quoteGate.classList.add("open");quoteGate.setAttribute("aria-hidden","false")}
 function closeQuoteGate(){if(!quoteGate.classList.contains("open"))return;quoteGate.classList.remove("open");quoteGate.setAttribute("aria-hidden","true");if(typeof focusStartHandler==="function")focusStartHandler();else toggleTimer()}
 $("#startFocus").onclick=()=>{if(running){if(typeof focusStartHandler==="function")focusStartHandler();return}openQuoteGate()};
-const oldImmersive=$("#focusImmersive"),immersiveRoot=oldImmersive.cloneNode(true);oldImmersive.replaceWith(immersiveRoot);
 $("#exitImmersive").onclick=e=>{e.preventDefault();closeImmersive()};
 $("#immersivePause").onclick=e=>{e.preventDefault();toggleTimer();e.currentTarget.textContent=running?"إيقاف مؤقت":"متابعة"};
 $("#immersiveReset").onclick=e=>{e.preventDefault();timerReset();closeImmersive()};
@@ -518,4 +517,23 @@ try{renderIndividualChallenge()}catch(e){console.error("Individual challenge sta
 try{renderFriends()}catch(e){console.error("Friends startup:",e)}
 try{paintDuel()}catch(e){console.error("Duel startup:",e)}
 try{paintDailyGoal()}catch(e){console.error("Daily goal startup:",e)}
+</script>
+<script>
+/* Isolated focus-screen controls: this script still runs if optional startup code above throws. */
+(()=>{
+ const byId=id=>document.getElementById(id);
+ const bind=(id,fn)=>{
+   const el=byId(id);
+   if(!el){console.error("NOX focus control missing:",id);return}
+   el.addEventListener("click",event=>{
+     event.preventDefault();
+     event.stopImmediatePropagation();
+     try{fn(event,el)}catch(error){console.error("NOX focus control failed:",id,error);const status=byId("pomodoroStatus");if(status)status.textContent="حدث خطأ في زر التحكم. أعد تحميل الصفحة."; }
+   },true);
+ };
+ bind("exitImmersive",()=>{if(typeof closeImmersive==="function")closeImmersive();else{const root=byId("focusImmersive");if(root){root.classList.remove("open");root.setAttribute("aria-hidden","true")}document.body.style.overflow="";}});
+ bind("immersivePause",(_,el)=>{if(typeof toggleTimer!=="function")throw new Error("Timer function unavailable");toggleTimer();el.textContent=(typeof running!=="undefined"&&running)?"إيقاف مؤقت":"متابعة";});
+ bind("immersiveReset",()=>{if(typeof timerReset!=="function")throw new Error("Reset function unavailable");timerReset();if(typeof closeImmersive==="function")closeImmersive();});
+ bind("sceneInteract",()=>{const scene=byId("immersiveScene"),stage=byId("immersiveStage"),goalStage=byId("goalStage");if(scene){scene.classList.remove("scene-pulse");void scene.offsetWidth;scene.classList.add("scene-pulse")}if(stage)stage.textContent="✦ "+(goalStage?.textContent||"واصل الاستكشاف");});
+})();
 </script></body></html>
