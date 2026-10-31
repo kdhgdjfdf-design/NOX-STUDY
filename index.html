@@ -613,4 +613,53 @@ try{paintDailyGoal()}catch(e){console.error("Daily goal startup:",e)}
  },true);
 })();
 </script>
+
+<script>
+<!-- NOX AUTH RECOVERY -->
+(()=>{
+ const say=m=>{const e=document.getElementById('noxAuthStatus');if(e)e.textContent=m;};
+ const getClient=()=>{
+  if(!window.supabase?.createClient)throw new Error("تعذر تحميل مكتبة التسجيل. تحقق من الإنترنت ثم أعد تحميل الصفحة.");
+  return window.supabase.createClient("https://ohuffzugxmaewdeyckgc.supabase.co","sb_publishable_m-xcNtE-wIr1HrrN86R3vQ_7MDqC_Mk",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:"nox-study-auth"}});
+ };
+ let client;
+ try{client=getClient();}catch(e){say(e.message);return;}
+ const showUser=user=>{
+  const panel=document.getElementById("noxSocialPanel"),out=document.getElementById("noxSignOut"),in=document.getElementById("noxSignIn"),up=document.getElementById("noxSignUp"),name=document.getElementById("noxDisplayName");
+  if(panel)panel.style.display=user?"block":"none";
+  if(out)out.style.display=user?"inline-block":"none";
+  if(in)in.style.display=user?"none":"inline-block";
+  if(up)up.style.display=user?"none":"inline-block";
+  if(name)name.style.display=user?"none":"block";
+  if(user){const email=document.getElementById("noxEmail");if(email)email.value=user.email||"";say(user.email?"تم تسجيل الدخول: "+user.email:"تم تسجيل الدخول.");}
+ };
+ const handle=async id=>{
+  const email=(document.getElementById("noxEmail")?.value||"").trim();
+  const password=document.getElementById("noxPassword")?.value||"";
+  const name=(document.getElementById("noxDisplayName")?.value||"").trim().replace(/\s+/g," ");
+  if(!email||password.length<6){say("أدخل بريدًا صحيحًا وكلمة مرور من 6 أحرف على الأقل.");return;}
+  const btn=document.getElementById(id);if(btn)btn.disabled=true;
+  try{
+   if(id==="noxSignUp"){
+    if(name.length<3||name.length>24){say("اختر اسم عرض من 3 إلى 24 حرفًا.");return;}
+    const {data,error}=await client.auth.signUp({email,password,options:{data:{display_name:name},emailRedirectTo:"https://kdhgdjfdf-design.github.io/NOX-STUDY/"}});
+    if(error)throw error;
+    if(data.session){showUser(data.user);say("تم إنشاء الحساب وتسجيل الدخول.");}
+    else say("تم إرسال طلب إنشاء الحساب. افتح رسالة التأكيد في بريدك ثم سجّل الدخول.");
+   }else{
+    const {data,error}=await client.auth.signInWithPassword({email,password});
+    if(error)throw error;showUser(data.user);
+   }
+  }catch(e){say("تعذر إكمال العملية: "+(e?.message||"خطأ غير معروف"));}
+  finally{if(btn)btn.disabled=false;}
+ };
+ document.addEventListener("click",event=>{
+  const b=event.target.closest("#noxSignUp,#noxSignIn,#noxSignOut");if(!b)return;
+  event.preventDefault();event.stopImmediatePropagation();
+  if(b.id==="noxSignUp"||b.id==="noxSignIn"){handle(b.id);return;}
+  client.auth.signOut().then(({error})=>{if(error)throw error;showUser(null);}).catch(e=>say("تعذر تسجيل الخروج: "+e.message));
+ },true);
+ client.auth.getSession().then(({data,error})=>{if(error)say("تعذر استعادة الجلسة: "+error.message);else if(data?.session)showUser(data.session.user);}).catch(e=>say("تعذر الاتصال بخدمة الحسابات: "+e.message));
+})();
+</script>
 </body></html>
