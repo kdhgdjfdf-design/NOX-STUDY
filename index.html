@@ -627,10 +627,15 @@ try{paintDailyGoal()}catch(e){console.error("Daily goal startup:",e)}
  const chooser=document.getElementById('challengeChooser');
  const individual=document.getElementById('individualChallengeSection');
  const group=document.getElementById('groupChallengeSection');
+ const setVisible=(el,visible)=>{
+   if(!el)return;
+   el.hidden=!visible;
+   el.style.setProperty('display',visible?'block':'none','important');
+ };
  const show=(target)=>{
-   if(chooser)chooser.style.display=target==='chooser'?'block':'none';
-   if(individual)individual.style.display=target==='individual'?'block':'none';
-   if(group)group.style.display=target==='group'?'block':'none';
+   setVisible(chooser,target==='chooser');
+   setVisible(individual,target==='individual');
+   setVisible(group,target==='group');
    if(target==='individual'&&typeof window.renderIndividualChallenge==='function')window.renderIndividualChallenge();
    if(target==='group'&&typeof window.loadNoxFriendProgress==='function'){
      try{Promise.resolve(window.loadNoxFriendProgress()).catch(err=>console.error('Group challenge load:',err));}
@@ -639,9 +644,11 @@ try{paintDailyGoal()}catch(e){console.error("Daily goal startup:",e)}
  };
  root.addEventListener('click',event=>{
    const tab=event.target.closest('[data-challenge-tab]');
-   if(tab&&root.contains(tab)){event.preventDefault();event.stopPropagation();show(tab.dataset.challengeTab==='individual'?'individual':'group');return;}
+   if(tab&&root.contains(tab)){event.preventDefault();event.stopImmediatePropagation();show(tab.dataset.challengeTab==='individual'?'individual':'group');return;}
    const back=event.target.closest('[data-challenge-back]');
-   if(back&&root.contains(back)){event.preventDefault();event.stopPropagation();show('chooser');}
+   if(back&&root.contains(back)){event.preventDefault();event.stopImmediatePropagation();show('chooser');return;}
+   const action=event.target.closest('#groupChallengeSection [data-view]');
+   if(action&&root.contains(action)){event.preventDefault();event.stopImmediatePropagation();if(typeof window.go==='function')window.go(action.dataset.view);}
  },true);
 })();
 </script>
