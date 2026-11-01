@@ -555,17 +555,15 @@ function splitLessonSentences(raw){return raw.replace(/\\r/g," ").split(/\\n{2,}
 function buildLessonSummary(sentences){const ranked=sentences.map((text,index)=>({text,index,score:Math.min(text.length,220)/220+(index===0?.25:0)+(/تعريف|يعني|بسبب|لذلك|أهمية|يتكون|يحدث|النتيجة|أولًا|ثانيًا|الخلاصة|مثال|because|therefore|definition|important/i.test(text)?.35:0)})).sort((a,b)=>b.score-a.score).slice(0,Math.min(5,Math.max(2,Math.ceil(sentences.length*.22)))).sort((a,b)=>a.index-b.index);return ranked.map(x=>"• "+x.text).join("\\n")}
 $("#generateLessonCards").onclick=()=>{const raw=$("#lessonTranscript").value.trim();if(raw.length<100){$("#lessonStatus").textContent="أضف نصًا أو تفريغًا أطول قليلًا حتى نستخرج منه ملخصًا وأسئلة.";return}const sentences=splitLessonSentences(raw);if(sentences.length<2){$("#lessonStatus").textContent="قسّم نص الدرس إلى جمل أو فقرات حتى نتمكن من إعداد أسئلة مفيدة.";return}const chosen=sentences.filter(x=>x.length<=260).slice(0,40);if(chosen.length<2){$("#lessonStatus").textContent="النص قصير جدًا أو غير مقسّم بوضوح. أضف مزيدًا من محتوى الدرس.";return}const summary=buildLessonSummary(chosen);generatedLessonCards=chosen.slice(0,12).map((answer,i)=>({id:Date.now()+i,q:"اشرح الفكرة التالية بأسلوبك: "+answer.slice(0,Math.min(85,answer.length))+(answer.length>85?"…":""),a:answer,due:0,interval:0,source:"youtube-lesson"}));$("#lessonSummary").textContent=summary;$("#lessonQuestions").innerHTML=generatedLessonCards.slice(0,6).map((c,i)=>'<div class="item"><div><strong>'+(i+1)+'. '+esc(c.q)+'</strong><small>الإجابة المقترحة: '+esc(c.a)+'</small></div></div>').join("");$("#lessonSummaryBox").style.display="block";$("#lessonStatus").textContent="أُعدّ الملخص والأسئلة محليًا من النص الذي أدخلته. هذه طريقة تلخيص استخراجية وليست تحليلًا ذكيًا مضمونًا، لذا راجع النتائج.";};
 $("#saveLessonQuestions").onclick=()=>{if(!generatedLessonCards.length){$("#lessonStatus").textContent="أنشئ الملخص والأسئلة أولًا.";return}const all=get("cards");all.push(...generatedLessonCards.map((c,i)=>({...c,id:Date.now()+i})));put("cards",all);renderCards();$("#lessonStatus").textContent="تم حفظ "+generatedLessonCards.length+" سؤالًا في بطاقات المراجعة.";$("#lessonSummaryBox").style.display="none";generatedLessonCards=[];};
-const focusStartHandler=$("#startFocus").onclick,quoteGate=$("#quoteGate");
-const focusQuotes=["﴿ وَقُلْ رَبِّ زِدْنِي عِلْمًا ﴾","﴿ وَأَنْ لَيْسَ لِلْإِنْسَانِ إِلَّا مَا سَعَى ﴾","وما توفيقي إلا بالله عليه توكلت وإليه أنيب","استعن بالله ولا تعجز"];
-let focusQuoteCursor=-1;
-function openQuoteGate(){focusQuoteCursor=(focusQuoteCursor+1)%focusQuotes.length;$("#quoteGateText").textContent=focusQuotes[focusQuoteCursor];quoteGate.classList.add("open");quoteGate.setAttribute("aria-hidden","false")}
-function closeQuoteGate(){if(!quoteGate.classList.contains("open"))return;quoteGate.classList.remove("open");quoteGate.setAttribute("aria-hidden","true");if(typeof focusStartHandler==="function")focusStartHandler();else toggleTimer()}
-$("#startFocus").onclick=()=>{if(running){if(typeof focusStartHandler==="function")focusStartHandler();return}openQuoteGate()};
+/* Focus controls: bind once; no quote overlay intercepts the start button. */
+$("#startFocus").onclick=toggleTimer;
+$("#resetFocus").onclick=()=>{timerReset();closeImmersive()};
 $("#exitImmersive").onclick=e=>{e.preventDefault();closeImmersive()};
 $("#immersivePause").onclick=e=>{e.preventDefault();toggleTimer();e.currentTarget.textContent=running?"إيقاف مؤقت":"متابعة"};
 $("#immersiveReset").onclick=e=>{e.preventDefault();timerReset();closeImmersive()};
+const quoteGate=$("#quoteGate");
+if(quoteGate){quoteGate.classList.remove("open");quoteGate.setAttribute("aria-hidden","true");}
 
-quoteGate.addEventListener("click",closeQuoteGate);quoteGate.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();closeQuoteGate()}});
 function rewardEarnedPoints(){return Math.floor(Math.max(0,Number(localStorage.getItem("ss:rewardFocusMs")||0))/900000)*10}
 function rewardSpentPoints(){return Math.max(0,Number(localStorage.getItem("ss:rewardSpentPoints")||0))}
 function rewardAvailablePoints(){return Math.max(0,rewardEarnedPoints()-rewardSpentPoints())}
