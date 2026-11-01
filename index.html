@@ -627,14 +627,24 @@ try{paintDailyGoal()}catch(e){console.error("Daily goal startup:",e)}
  const setVisible=(el,visible)=>{
    if(!el)return;
    el.hidden=!visible;
+   el.removeAttribute('aria-hidden');
    el.style.setProperty('display',visible?'block':'none','important');
+   el.style.setProperty('visibility',visible?'visible':'hidden','important');
+   if(visible){el.style.setProperty('height','auto','important');el.style.setProperty('min-height','1px','important');}
+ };
+ const forceGroupVisible=()=>{
+   if(!group)return;
+   setVisible(group,true);
+   const wrap=group.querySelector('.lilo-wrap');
+   const card=group.querySelector('.lilo-card');
+   [wrap,card].forEach(el=>{if(el){el.hidden=false;el.style.setProperty('display','block','important');el.style.setProperty('visibility','visible','important');}});
  };
  const show=(target)=>{
    setVisible(chooser,target==='chooser');
    setVisible(individual,target==='individual');
    setVisible(group,target==='group');
    if(target==='individual'&&typeof window.renderIndividualChallenge==='function')window.renderIndividualChallenge();
-   if(target==='group'){if(typeof window.renderGroupChallenge==='function')window.renderGroupChallenge();if(typeof window.loadNoxFriendProgress==='function'){
+   if(target==='group'){forceGroupVisible();if(typeof window.renderGroupChallenge==='function')window.renderGroupChallenge();if(typeof window.loadNoxFriendProgress==='function'){
      try{Promise.resolve(window.loadNoxFriendProgress()).catch(err=>console.error('Group challenge load:',err));}
      catch(err){console.error('Group challenge load:',err);}
    }}
