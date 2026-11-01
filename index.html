@@ -470,6 +470,7 @@ function renderGroupChallenge(){
 window.renderGroupChallenge=renderGroupChallenge;
 function minutesLabel(n){n=Math.max(0,Number(n)||0);return Math.floor(n/60)+" س "+(n%60)+" د"}
 async function loadNoxFriendProgress(){renderGroupChallenge();const el=$("#friendProgressList");if(!noxCurrentUser||!noxSupabase){if(el){el.className="empty";el.textContent="سجّل الدخول لعرض تقدم أصدقائك."}return}try{const {data,error}=await noxSupabase.rpc("nox_friend_progress");if(error)throw error;const rows=Array.isArray(data)?data:[];el.className=rows.length?"":"empty";el.innerHTML=rows.length?rows.map(r=>{const name=r.display_name||r.name||r.friend_code||"صديق";const mins=r.total_minutes??r.study_minutes??r.minutes??0;return '<div class="item"><div><strong>'+esc(name)+'</strong><small>إجمالي الدراسة المسجّلة</small></div><strong>'+esc(minutesLabel(mins))+'</strong></div>'}).join(""):"لا يوجد أصدقاء مرتبطون بعد. أرسل رمزك لصديق واقبلوا طلبات الصداقة.";const weekly=rows.reduce((n,r)=>n+(Number(r.weekly_minutes)||0),0);const friend=document.getElementById("liloFriendTime");if(friend)friend.textContent=rows.length?minutesLabel(weekly):"—";const status=document.getElementById("liloChallengeStatus");if(status&&rows.length)status.textContent="تقدمك محسوب من جلسات هذا الأسبوع. تقدم الأصدقاء محسوب من الجلسات التي تمت مزامنتها."; }catch(e){if(el){el.className="empty";el.textContent="تعذر تحميل تقدم الأصدقاء: "+(e.message||"تحقق من الدالة nox_friend_progress.")}}}
+window.loadNoxFriendProgress=loadNoxFriendProgress;
 $("#refreshFriendProgress").onclick=loadNoxFriendProgress;
 async function syncNoxStudyHistory(){if(!noxCurrentUser||!noxSupabase){noxSocialMessage("#noxSyncStatus","سجّل الدخول أولًا.");return}const history=get("studyHistory",[]).filter(x=>x.type==="focus"&&Number(x.minutes)>0&&x.at),key="noxSyncedSessionTimes",synced=get(key,[]),todo=history.filter(x=>!synced.includes(String(x.at)));if(!todo.length){noxSocialMessage("#noxSyncStatus","لا توجد جلسات جديدة للمزامنة. الجلسات القديمة لا تُرفع تلقائيًا إلا عند الضغط على هذا الزر.");return}let done=0;for(const session of todo){const {error}=await noxSupabase.from("nox_study_sessions").insert({user_id:noxCurrentUser.id,minutes:Math.round(Number(session.minutes)),completed_at:new Date(Number(session.at)).toISOString()});if(error){noxSocialMessage("#noxSyncStatus","تمت مزامنة "+done+" جلسة؛ تعذر إرسال الباقي: "+error.message);return}synced.push(String(session.at));put(key,synced);done++}noxSocialMessage("#noxSyncStatus","تمت مزامنة "+done+" جلسة تركيز بنجاح.");await loadNoxFriendProgress()}
 $("#syncHistoryBtn").onclick=syncNoxStudyHistory;
@@ -656,7 +657,7 @@ try{paintDailyGoal()}catch(e){console.error("Daily goal startup:",e)}
    if(target==='group'){if(typeof window.renderGroupChallenge==='function')window.renderGroupChallenge();if(typeof window.loadNoxFriendProgress==='function'){
      try{Promise.resolve(window.loadNoxFriendProgress()).catch(err=>console.error('Group challenge load:',err));}
      catch(err){console.error('Group challenge load:',err);}
-   }
+   }}
  };
  root.addEventListener('click',event=>{
    const tab=event.target.closest('[data-challenge-tab]');
