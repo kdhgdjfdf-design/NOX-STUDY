@@ -697,4 +697,34 @@ try{paintDailyGoal()}catch(e){console.error("Daily goal startup:",e)}
  client.auth.getSession().then(({data,error})=>{if(error)say("تعذر استعادة الجلسة: "+error.message);else if(data?.session)showUser(data.session.user);}).catch(e=>say("تعذر الاتصال بخدمة الحسابات: "+e.message));
 })();
 </script>
+
+<script>
+/* NOX NAVIGATION RECOVERY: section navigation is isolated from optional app startup code. */
+(()=> {
+ if(document.documentElement.dataset.noxNavRecovery==='1')return;
+ document.documentElement.dataset.noxNavRecovery='1';
+ document.addEventListener('click',event=>{
+  const control=event.target.closest('[data-view]');
+  if(!control)return;
+  const id=control.dataset.view;
+  const target=document.getElementById(id);
+  if(!target||!target.classList.contains('view'))return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  document.querySelectorAll('.view').forEach(view=>view.classList.toggle('active',view===target));
+  document.querySelectorAll('.bottomnav [data-view]').forEach(button=>button.classList.toggle('active',button.dataset.view===id));
+  window.scrollTo(0,0);
+  try{
+   if(id==='challenges'&&typeof window.renderChallenges==='function')window.renderChallenges();
+   if(id==='individualChallengeView'&&typeof window.renderIndividualChallenge==='function')window.renderIndividualChallenge();
+   if(id==='friends'&&typeof window.renderFriends==='function')window.renderFriends();
+   if(id==='organize'){if(typeof window.renderTasks==='function')window.renderTasks();if(typeof window.renderPages==='function')window.renderPages();}
+   if(id==='cards'&&typeof window.renderCards==='function')window.renderCards();
+   if(id==='notes'&&typeof window.renderNotes==='function')window.renderNotes();
+   if(id==='analysis'&&typeof window.analysisResetQuiz==='function')window.analysisResetQuiz();
+  }catch(error){console.error('NOX section navigation render:',id,error);}
+ },true);
+})();
+</script>
+
 </body></html>
