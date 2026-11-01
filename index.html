@@ -462,11 +462,14 @@ function individualChallengeSave(){
  const period=$("#individualChallengePeriod").value==="weekly"?"weekly":"daily";
  const hours=Math.max(.25,Math.min(168,Number($("#individualChallengeHours").value)||2));
  put("individualChallenge",{enabled:true,period,hours});
- $("#focusMode").value="duration";if($("#focusMode"))$("#focusMode").disabled=false;
- $("#durationSettings").hidden=false;$("#durationSettings").style.display="block";$("#pomodoroSettings").hidden=true;$("#pomodoroSettings").style.display="none";
- const totalMinutes=Math.round(hours*60);$("#focusHours").value=Math.floor(totalMinutes/60);$("#focusMinutes").value=totalMinutes%60;
+ const requestedMinutes=Math.round(hours*60),sessionMinutes=Math.min(720,requestedMinutes);
+ const durationInput=$("#focusDurationMinutes");
+ if(!durationInput){$("#individualChallengeStatus").textContent="تعذر العثور على إعداد مدة جلسة التركيز.";return}
+ durationInput.value=String(sessionMinutes);
  timerReset();renderIndividualChallenge();go("focus");startTimer();
- $("#pomodoroStatus").textContent="بدأ تحديك الشخصي. سيُحسب وقت التركيز الفعلي فقط.";
+ $("#pomodoroStatus").textContent=requestedMinutes>720
+  ?"بدأت جلسة مدتها 12 ساعة كحد أقصى. سيبقى هدف التحدي محفوظًا ويُحسب وقت التركيز الفعلي فقط."
+  :"بدأ تحديك الشخصي. سيُحسب وقت التركيز الفعلي فقط.";
 }
 function renderIndividualChallenge(){
  const cfg=individualChallengeConfig(),period=cfg.period==="weekly"?"weekly":"daily",hours=Math.max(.25,Number(cfg.hours)||2),history=get("studyHistory",[]),now=new Date();
@@ -657,10 +660,10 @@ try{paintDailyGoal()}catch(e){console.error("Daily goal startup:",e)}
  let client;
  try{client=getClient();}catch(e){say(e.message);return;}
  const showUser=user=>{
-  const panel=document.getElementById("noxSocialPanel"),out=document.getElementById("noxSignOut"),in=document.getElementById("noxSignIn"),up=document.getElementById("noxSignUp"),name=document.getElementById("noxDisplayName");
+  const panel=document.getElementById("noxSocialPanel"),out=document.getElementById("noxSignOut"),signInBtn=document.getElementById("noxSignIn"),up=document.getElementById("noxSignUp"),name=document.getElementById("noxDisplayName");
   if(panel)panel.style.display=user?"block":"none";
   if(out)out.style.display=user?"inline-block":"none";
-  if(in)in.style.display=user?"none":"inline-block";
+  if(signInBtn)signInBtn.style.display=user?"none":"inline-block";
   if(up)up.style.display=user?"none":"inline-block";
   if(name)name.style.display=user?"none":"block";
   if(user){const email=document.getElementById("noxEmail");if(email)email.value=user.email||"";say(user.email?"تم تسجيل الدخول: "+user.email:"تم تسجيل الدخول.");}
